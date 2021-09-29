@@ -1,0 +1,32 @@
+# Granular Robots Configuration File - MGB
+# 
+
+# Path information
+pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software/lib
+
+# Sockets information: How programs communicate with each other
+[sockets]
+# host for incoming telemetry to the robots
+telehost = '192.168.1.2' 
+# GBOT - port for telemetry from the robots
+teleport = 6807 
+# port for sending commands to the robots
+cmdport = 6808 
+# Internal socket for sending commands to the robots
+comsock = /tmp/gbotcom
+# Internal socket for getting telemetry from the robots
+telesock = /tmp/gbotele
+
+# Details about logging used by gbot_command and other programs 
+[logging]
+# Name of the log file
+logfile = '/Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
+logfile = '$GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
+# Internal socket for log messages
+logsocket = /tmp/gbotlog
+
+# Details for the GBOT_READ program
+[gbotread]
+# Location of the file with incoming telemetry
+telefile = '/Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
+telefile = '$GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt

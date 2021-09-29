@@ -7,7 +7,8 @@
 import socket
 import sys
 
-serveraddr = './testhost'
+# Put serveraddr in /run, /var/run or /tmp
+serveraddr = '/tmp/testsock'
 bufsize = 5000
 
 for cnt in range(100000):
