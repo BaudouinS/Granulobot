@@ -1,13 +1,16 @@
 # Granular Robots Configuration File - MGB
 # 
 
-# Path information
-pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software/lib
+### Files and Paths information
+[path]
+# Path information (use export PYTHONPATH=..... in bash)
+pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
 
 # Sockets information: How programs communicate with each other
 [sockets]
 # host for incoming telemetry to the robots
-telehost = '192.168.1.2' 
+#telehost = '192.168.1.15' 
+telehost = '10.150.248.162' 
 # GBOT - port for telemetry from the robots
 teleport = 6807 
 # port for sending commands to the robots
@@ -20,13 +23,64 @@ telesock = /tmp/gbotele
 # Details about logging used by gbot_command and other programs 
 [logging]
 # Name of the log file
-logfile = '/Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
-logfile = '$GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
+logfile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
+#logfile = $GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
 # Internal socket for log messages
 logsocket = /tmp/gbotlog
 
 # Details for the GBOT_READ program
 [gbotread]
+# Telemetry parameter to use to identify the robots
+idparam = d
 # Location of the file with incoming telemetry
-telefile = '/Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
-telefile = '$GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt
+telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
+#telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt
+
+# Details for the simbot simulated robot
+[simbot]
+# Telemetry Reporting Frequency (Hz)
+telefreq = 2.0
+# Telemetry Text
+teletext = 'A=25 B=30'
+
+
+tasklist = """
+
+Full Task List:
+
+./ Testrobot: prog that sends string NHz and listens on port to receive messages
+  ./ Set up program
+  ./ Get config (use library)
+  ./ Set ports
+  ./ Run delay
+  ./ Report telemetry
+  ./ Check for commands
+* Commandinterface
+  * Basic setup with existing parts:
+    * Add files: Agentparent, Interparent, Userinter, Socketinter, Webinter, Logctrl, Configagent
+    * Add interfaces and agents: Userinter, socketinger, configagent
+  * Make telemetry agent - get (gets telemetry into memory), commlist (ip, last entry, MAC)
+    varlist (acc, vel, motor settings) - all configurable
+  * Send command agent - send robotId command
+* Telemetry
+  * Basic loop setup and memory for messages: Dict, open file
+  * Thread function to read from robots
+    * add detection of IP address and add to message
+    * Make it deamon so off when shutodwn
+  * Thread for respond to telequerry
+    * make new thread for each connection to avoid blocking main program
+      * Make sure subthreads die after 1s if no data (crash with error from timeout?)
+  * Exit if prompted from telequerry
+  * Connect real robot
+* Library:
+  ./ Open config (also accepts multiple configs - see HAWC and loads envars)
+  * Read from tele (can have robot ID for one robot)
+  * Write to comm (returns error message)
+  * Write log message (sender, level, message) - can I use logging for this?
+* Send command
+  * Basic loop setup
+  * Thread to respond to commands
+  * Thread to log messages
+  * Exit if prompted by command message
+  
+"""
