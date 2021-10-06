@@ -6,42 +6,44 @@
 # Path information (use export PYTHONPATH=..... in bash)
 pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
 
-# Sockets information: How programs communicate with each other
+### Sockets information: How programs communicate with each other
 [sockets]
-# host for incoming telemetry to the robots
-#telehost = '192.168.1.15' 
-telehost = '10.150.248.162' 
-# GBOT - port for telemetry from the robots
-teleport = 6807 
-# port for sending commands to the robots
-cmdport = 6808 
-# Internal socket for sending commands to the robots
-comsock = /tmp/gbotcom
-# Internal socket for getting telemetry from the robots
-telesock = /tmp/gbotele
+    # host for incoming telemetry to the robots
+    telehost = '192.168.1.7' 
+    #telehost = '10.150.248.162' 
+    # GBOT - port for telemetry from the robots
+    teleport = 6807 
+    # port for sending commands to the robots
+    cmdport = 6808 
+    # Internal socket for sending commands to the robots
+    comsock = /tmp/gbotcom
+    # Internal socket for getting telemetry from the robots
+    telesock = /tmp/gbotele
+    # Internal socket for log messages
+    logsock = /tmp/gbotlog
 
-# Details about logging used by gbot_command and other programs 
+### Details about logging used by gbot_command and other programs 
 [logging]
-# Name of the log file
-logfile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
-#logfile = $GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
-# Internal socket for log messages
-logsocket = /tmp/gbotlog
+    # Name of the log file
+    logfile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
+    #logfile = $GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
+    # Internal socket for log messages - is in [sockets] section
 
-# Details for the GBOT_READ program
+### Details for the GBOT_READ program
 [gbotread]
-# Telemetry parameter to use to identify the robots
-idparam = d
-# Location of the file with incoming telemetry
-telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
-#telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt
+    # Telemetry parameter to use to identify the robots
+    idparam = D
+    # Location of the file with incoming telemetry
+    telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
+    #telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt
 
-# Details for the simbot simulated robot
+### Details for the simbot simulated robot
 [simbot]
-# Telemetry Reporting Frequency (Hz)
-telefreq = 2.0
-# Telemetry Text
-teletext = 'A=25 B=30'
+    # Telemetry Reporting Frequency (Hz)
+    telefreq = 2.0
+    # Telemetry Text: Multi-line string, the bot cycles through the lines
+    teletext = '''D=01 A=25 B=30
+D=05 A=30 B=10'''
 
 
 tasklist = """
@@ -59,11 +61,13 @@ Full Task List:
   * Basic setup with existing parts:
     * Add files: Agentparent, Interparent, Userinter, Socketinter, Webinter, Logctrl, Configagent
     * Add interfaces and agents: Userinter, socketinger, configagent
-  * Make telemetry agent - get (gets telemetry into memory), commlist (ip, last entry, MAC)
-    varlist (acc, vel, motor settings) - all configurable
+  * Make telemetry agent - get (gets telemetry into memory)
+    * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
+    * On startup check if read is running (after 1s delay) and report error if not.
   * Send command agent - send robotId command
 * Telemetry
   * Basic loop setup and memory for messages: Dict, open file
+  * Set up configuration ports and stuffs
   * Thread function to read from robots
     * add detection of IP address and add to message
     * Make it deamon so off when shutodwn
@@ -79,8 +83,8 @@ Full Task List:
   * Write log message (sender, level, message) - can I use logging for this?
 * Send command
   * Basic loop setup
+  * Thread to log messages (UDP)
   * Thread to respond to commands
-  * Thread to log messages
   * Exit if prompted by command message
   
 """

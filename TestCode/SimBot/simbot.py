@@ -33,13 +33,18 @@ sock.listen(5)
 print('Server Listening at %s:%d' % localaddr)
 # Set up UDP telemetry communications
 teleconn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# Read messages to send
+msgs = [ s.strip() for s in config['simbot']['teletext'].split('\n') if len(s) > 5]
 
 ### Command loop
+msgi = 0 # next message to send
 while not 'exit' in comm[:4].lower():
     ### Send the telemetry string
-    message = config['simbot']['teletext']
-    teleconn.sendto(message.encode(), serveraddr)
-    print('Sent %s' % message)
+    teleconn.sendto(msgs[msgi].encode(), serveraddr)
+    print('Sent %s' % msgs[msgi])
+    # Increase message counter
+    msgi += 1
+    if not msgi < len(msgs): msgi = 0 
     ### Check for  incoming commands
     readlist, _wtl, _erl = select.select([sock], [], [],0.0)
     if readlist:
