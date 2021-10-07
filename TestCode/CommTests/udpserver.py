@@ -15,7 +15,7 @@ text = "Aeneadum genetrix, hominum divomque voluptas, alma Venus, caeli subter l
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(serveraddr)
 print(len(text))
-print('Server Listening')
+print('Server Listening at %s' % repr(serveraddr))
 
 while True:
     data, clientaddr = sock.recvfrom(1024)
