@@ -6,6 +6,10 @@
 # Path information (use export PYTHONPATH=..... in bash)
 pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
 
+### Environment variables
+[envars]
+    GBOT_BASEPATH = /Users/berthoud/instruments/electro/2021granulobots
+
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
@@ -30,17 +34,17 @@ pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Soft
     # Internal socket for log messages - is in [sockets] section
 
 ### Details for the GBOT_READ program
-[gbotread]
+[read]
     # Telemetry parameter to use to identify the robots
     idparam = D
     # Location of the file with incoming telemetry
-    telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
-    #telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H%M.txt
+    #telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
+    telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H.txt
 
 ### Details for the simbot simulated robot
 [simbot]
     # Telemetry Reporting Frequency (Hz)
-    telefreq = 2.0
+    telefreq = 20.0
     # Telemetry Text: Multi-line string, the bot cycles through the lines
     teletext = '''D=01 A=25 B=30
 D=05 A=30 B=10'''
@@ -57,6 +61,18 @@ Full Task List:
   ./ Run delay
   ./ Report telemetry
   ./ Check for commands
+* Telemetry
+  ./ Basic loop setup and memory for messages: Dict, open file
+  ./ Set up configuration ports and stuffs
+  ./ Thread function to read from robots
+    ./ add detection of IP address and add to message
+    ./ Make it deamon so off when shutodwn
+  ./ Thread for respond to telequerry
+    ./ make new thread for each connection to avoid blocking main program
+  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
+  ./ Exit if prompted from telequerry
+  * Connect real robot
+  * Add logging
 * Commandinterface
   * Basic setup with existing parts:
     * Add files: Agentparent, Interparent, Userinter, Socketinter, Webinter, Logctrl, Configagent
@@ -65,17 +81,6 @@ Full Task List:
     * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
     * On startup check if read is running (after 1s delay) and report error if not.
   * Send command agent - send robotId command
-* Telemetry
-  * Basic loop setup and memory for messages: Dict, open file
-  * Set up configuration ports and stuffs
-  * Thread function to read from robots
-    * add detection of IP address and add to message
-    * Make it deamon so off when shutodwn
-  * Thread for respond to telequerry
-    * make new thread for each connection to avoid blocking main program
-      * Make sure subthreads die after 1s if no data (crash with error from timeout?)
-  * Exit if prompted from telequerry
-  * Connect real robot
 * Library:
   ./ Open config (also accepts multiple configs - see HAWC and loads envars)
   * Read from tele (can have robot ID for one robot)

@@ -6,19 +6,27 @@
 
 import socket
 import sys
+import time
 
 # Put serveraddr in /run, /var/run or /tmp
-serveraddr = '/tmp/testsock'
+serveraddr = '/tmp/gbotele'
 bufsize = 5000
 
-for cnt in range(100000):
+commands = ['something %d',
+            'botdata %d',
+            'else %d',
+            'botdata %d',
+            'exit %d']
+
+for cnt in range(len(commands)):
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     s.connect(serveraddr)
-    message = 'Gimme Data %d' % cnt
+    message = commands[cnt] % cnt
     print('Ready')
     s.sendall(message.encode())
     print('Sent')
     data=s.recv(bufsize)
     s.close()
-    print("Got Data: %s" % data.decode()[cnt//100:cnt//100+30])
+    print("Got Data: %s" % data.decode())
+    time.sleep(2.0)
     

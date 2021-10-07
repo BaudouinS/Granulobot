@@ -57,6 +57,7 @@ def setconfig(config = None):
         elif config:
             raise ValueError("setconfig: Invalid config = %s" % repr(config))
         # If no config is loaded look for it in sys.argv
+        # This was removed since users can call setconfig(sys.argv)
         #if not config:
         #    retmsg += '\nSearching sys.argv for config files'
         #    config = [ conf for conf in sys.argv if os.path.isfile(conf)]
