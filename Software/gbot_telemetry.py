@@ -14,6 +14,7 @@ import time
 from datetime import datetime
 import threading
 import socket
+import json
 from gbotlib import gbutils
 
 # Variables
@@ -41,9 +42,10 @@ def telerx():
             data = data.decode()
             # Get ID from data
             idpar = config['read']['idparam'].strip()
-            botid = [ s.strip()[len(idpar)+1:]
-                      for s in data.split()
-                      if idpar+'=' in s][0]
+            #botid = [ s.strip()[len(idpar)+1:]
+            #         for s in data.split()
+            #         if idpar+'=' in s][0]
+            botid = json.loads(data)[idpar]
             # Set values and add data to file
             data = data.strip() + ' IP=' + cliip
             botele[botid] = data
