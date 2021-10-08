@@ -14,8 +14,8 @@ pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Soft
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    #telehost = '10.150.248.162' 
-    telehost = '192.168.2.1'
+    telehost = '10.150.37.191' 
+    #telehost = '192.168.2.1'
     # GBOT - port for telemetry from the robots
     #teleport = 6807 
     teleport = 9000
@@ -36,9 +36,9 @@ pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Soft
     # Internal socket for log messages - is in [sockets] section
 
 ### Details for the GBOT_TELEMETRY program
-[telemetry]
+[read]
     # Telemetry parameter to use to identify the robots
-    idparam = A
+    idparam = d
     # Location of the file with incoming telemetry
     #telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
     telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H.txt
@@ -46,10 +46,11 @@ pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Soft
 ### Details for the simbot simulated robot
 [simbot]
     # Telemetry Reporting Frequency (Hz)
-    telefreq = 20.0
+    telefreq = 2.0
     # Telemetry Text: Multi-line string, the bot cycles through the lines
-    teletext = '''{"A":1,"t":97768,"d":5,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
-{"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}'''
+    teletext = '''{"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
+{"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
+{"A":5,"t":97799,"d":7,"x":0.052611,"y":-0.0957011,"z":9.818911,"u":0.001211,"v":0.00711,"w":-0.006111}'''
 #    teletext = '''D=01 A=25 B=30
 #D=05 A=30 B=10'''
 

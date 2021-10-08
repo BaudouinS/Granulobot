@@ -28,5 +28,5 @@ for cnt in range(len(commands)):
     data=s.recv(bufsize)
     s.close()
     print("Got Data: %s" % data.decode())
-    time.sleep(2.0)
+    time.sleep(10.0)
     
