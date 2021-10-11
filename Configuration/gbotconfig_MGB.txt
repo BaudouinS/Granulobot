@@ -1,10 +1,7 @@
 # Granular Robots Configuration File - MGB
 # 
-
-### Files and Paths information
-[path]
-# Path information (use export PYTHONPATH=..... in bash)
-pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
+# Set up path:
+# export PYTHONPATH=/Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
 
 ### Environment variables
 [envars]
@@ -14,34 +11,10 @@ pythonpath = /Users/berthoud/instruments/electro/2021granulobots/Granulobot/Soft
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    telehost = '10.150.37.191' 
+    telehost = '10.150.2.244'
     #telehost = '192.168.2.1'
     # GBOT - port for telemetry from the robots
-    #teleport = 6807 
-    teleport = 9000
-    # port for sending commands to the robots
-    cmdport = 6808 
-    # Internal socket for sending commands to the robots
-    comsock = /tmp/gbotcom
-    # Internal socket for getting telemetry from the robots
-    telesock = /tmp/gbotele
-    # Internal socket for log messages
-    logsock = /tmp/gbotlog
-
-### Details about logging used by gbot_command and other programs 
-[logging]
-    # Name of the log file
-    logfile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotlog.txt
-    #logfile = $GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
-    # Internal socket for log messages - is in [sockets] section
-
-### Details for the GBOT_TELEMETRY program
-[read]
-    # Telemetry parameter to use to identify the robots
-    idparam = d
-    # Location of the file with incoming telemetry
-    #telefile = /Users/berthoud/instruments/electro/2021granulobots/data/gbotelemetry.txt
-    telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H.txt
+    #teleport = 9000
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -59,6 +32,31 @@ tasklist = """
 
 Full Task List:
 
+* Commandinterface (UDP)
+  * Basic setup with existing parts:
+    ./ Add files: Agentparent, Interparent, Userinter, Configagent
+    ./ Add interfaces and agents: Userinter, configagent
+  * Make telemetry agent - get (gets telemetry into memory)
+    * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
+    * On startup check if read is running (after 1s delay) and report error if not.
+  * Send command agent - send robotId command
+  * Add Socket interface and web interface
+  * Config agent: make better all command
+  * Config agent: run through all commands and bugcheck
+* Manual
+  * How to run telemetry and command program(s)
+  * How to use simple gui
+  * How to run write a program to run the robots (what is interface and how to use it)
+* Library:
+  * Read from tele (can have robot ID for one robot)
+  * Write to comm (returns error message)
+  * Write log message (sender, level, message) - can I use logging for this?
+* Telemetry
+  * Thread to log messages (UDP)
+  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
+  * Logging set up for less messages in terminal
+  
+DONE:
 ./ Testrobot: prog that sends string NHz and listens on port to receive messages
   ./ Set up program
   ./ Get config (use library)
@@ -74,27 +72,16 @@ Full Task List:
     ./ Make it deamon so off when shutodwn
   ./ Thread for respond to telequerry
     ./ make new thread for each connection to avoid blocking main program
-  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
   ./ Exit if prompted from telequerry
-  * Connect real robot
-  * Add logging
-* Commandinterface
-  * Basic setup with existing parts:
-    * Add files: Agentparent, Interparent, Userinter, Socketinter, Webinter, Logctrl, Configagent
-    * Add interfaces and agents: Userinter, socketinger, configagent
-  * Make telemetry agent - get (gets telemetry into memory)
-    * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
-    * On startup check if read is running (after 1s delay) and report error if not.
-  * Send command agent - send robotId command
-* Library:
+  ./ Connect real robot
+  ./ Decision: Put command into telemetry program different threads
+  ./ Design have commloop and commhandle for commands to the bots
+  ./ Add local logging: setting up and send info to file and screen
+* Library
   ./ Open config (also accepts multiple configs - see HAWC and loads envars)
-  * Read from tele (can have robot ID for one robot)
-  * Write to comm (returns error message)
-  * Write log message (sender, level, message) - can I use logging for this?
-* Send command
-  * Basic loop setup
-  * Thread to log messages (UDP)
-  * Thread to respond to commands
-  * Exit if prompted by command message
+* Configs:
+  ./ Make baseconfig and delta config
+
+
   
 """

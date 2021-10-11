@@ -23,13 +23,12 @@ comm = '' # current command
 config = gbutils.setconfig(sys.argv)
 
 # Set up TCP listener for commands
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 #sock.setblocking(False)
 localaddr = (config['sockets']['telehost'], int(config['sockets']['cmdport']))
 serveraddr = (config['sockets']['telehost'], int(config['sockets']['teleport']))
 sock.bind(localaddr)
-sock.listen(5)
 print('Server Listening at %s:%d' % localaddr)
 # Set up UDP telemetry communications
 teleconn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -50,9 +49,8 @@ while not 'exit' in comm[:4].lower():
     if readlist:
         # Receive command
         # Warning: Recv can block if sender delays send after connect.
-        conn, cliaddr = sock.accept()
-        comm = conn.recv(1024).decode()
-        conn.close()
+        comm, cliaddr = sock.recvfrom(1024)
+        comm = comm.decode()
         print('Got Command %s' % comm)
     ### Pause
     time.sleep(1.0/float(config['simbot']['telefreq']))
