@@ -11,8 +11,8 @@
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    telehost = '10.150.2.244'
-    #telehost = '192.168.2.1'
+    #telehost = '10.150.2.244'
+    telehost = '192.168.0.100' # .100 .255
     # GBOT - port for telemetry from the robots
     #teleport = 9000
 
@@ -37,6 +37,8 @@ Full Task List:
     ./ Add files: Agentparent, Interparent, Userinter, Configagent
     ./ Add interfaces and agents: Userinter, configagent
   * Make telemetry agent - get (gets telemetry into memory)
+    ./ setup basic agenst
+    ./ add command for one robot only
     * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
     * On startup check if read is running (after 1s delay) and report error if not.
   * Send command agent - send robotId command

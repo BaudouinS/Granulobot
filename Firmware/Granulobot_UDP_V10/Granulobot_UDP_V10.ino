@@ -36,10 +36,10 @@
 /////USER PARAMETERS//////////////////
 
 /* WiFi network name and password */
-//const char * ssid = "TP-Link_C1BA";
-//const char * pwd = "93409582";
-const char * ssid = "gbots";
-const char * pwd = "gbotsRus";
+const char * ssid = "TP-Link_C1BA";
+const char * pwd = "93409582";
+//const char * ssid = "gbots";
+//const char * pwd = "gbotsRus";
 //const char * ssid = "HOME-26E2";
 //const char * pwd = "baked7744borrow";
 
@@ -134,8 +134,8 @@ const char * pwd = "gbotsRus";
 // it can be ip address of the server or 
 // a network broadcast address
 // here is broadcast address
-//const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
-const char * udpAddress = "192.168.2.1"; //255"; //broadcasting address= the program will read from this address
+const char * udpAddress = "192.168.0.100"; //255"; //broadcasting address= the program will read from this address
+//const char * udpAddress = "192.168.2.1"; //255"; //broadcasting address= the program will read from this address
 //const char * PadAddress = "192.168.0.100";
 //const char * udpAddress = "10.0.0.255"; //broadcasting address= the program will read from this address
 //const char * PadAddress = "10.0.0.15";

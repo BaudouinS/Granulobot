@@ -63,7 +63,7 @@ class TeleAgent(AgentParent):
                 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
                 s.connect(self.config['sockets']['telesock'])
                 s.sendall('botdata'.encode())
-                data=s.recv(1024)
+                data=s.recv(2048)
                 s.close()
                 # Print the inforamtion
                 retmsg = '\n'
