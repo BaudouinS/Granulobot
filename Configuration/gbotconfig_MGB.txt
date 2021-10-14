@@ -13,8 +13,6 @@
     #telehost = '192.168.1.7' 
     #telehost = '10.150.2.244'
     telehost = '192.168.0.100' # .100 .255
-    # GBOT - port for telemetry from the robots
-    #teleport = 9000
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -32,41 +30,41 @@ tasklist = """
 
 Full Task List:
 
-* Commandinterface (UDP)
-  * Basic setup with existing parts:
-    ./ Add files: Agentparent, Interparent, Userinter, Configagent
-    ./ Add interfaces and agents: Userinter, configagent
-  * Make telemetry agent - get (gets telemetry into memory)
-    ./ setup basic agenst
-    ./ add command for one robot only
-    * commlist (ip, last entry, MAC) varlist (acc, vel, motor settings) - all configurable
-    * On startup check if read is running (after 1s delay) and report error if not.
-  * Send command agent - send robotId command
-  * Add Socket interface and web interface
-  * Config agent: make better all command
-  * Config agent: run through all commands and bugcheck
 * Manual
   * How to run telemetry and command program(s)
-  * How to use simple gui
-  * How to run write a program to run the robots (what is interface and how to use it)
+  * How to use simple gui - or at least how to get help on running it.
+  * How to write a program to run the robots (what is interface and how to use it)
+* Telemetry
+  * Thread to log messages (UDP)
+  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
+  * Logging set up for less messages in terminal (INFO in terminal but DEBUG in file)
+* Commandinterface (UDP)
+  * On startup check if telemetry is running (after 1s delay) and report error if not.
+  * Add Socket interface and (simple) web interface
+  * Userinterface: allow uparrow for last cmd, allow getting messages while writing (look at vtcode)
+    * google how to do it (as terminal UI), if needed uset getch() equivalent and micromanage
+    ==>> Put gettele and sendcmd into library
+  * Config agent: make better all commands
+  * Config agent: run through all commands and bugcheck
+  * Telemetry and command agent: add timeouts and error catch if things go bad
+    * I.e. telecmd program not running, not answering
+  * For telemetry agent: flexible commands commlist (ip, last entry, MAC) varlist (acc, vel, motor settings)
+  * For telemetry agent: get 1 message from robot every seconds for 10s or so
+  * For command agent: Send message to all robots (maybe make this gbots_telemetry functionality)
 * Library:
   * Read from tele (can have robot ID for one robot)
   * Write to comm (returns error message)
   * Write log message (sender, level, message) - can I use logging for this?
-* Telemetry
-  * Thread to log messages (UDP)
-  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
-  * Logging set up for less messages in terminal
   
 DONE:
-./ Testrobot: prog that sends string NHz and listens on port to receive messages
+# Testrobot: prog that sends string NHz and listens on port to receive messages
   ./ Set up program
   ./ Get config (use library)
   ./ Set ports
   ./ Run delay
   ./ Report telemetry
   ./ Check for commands
-* Telemetry
+# Telemetry
   ./ Basic loop setup and memory for messages: Dict, open file
   ./ Set up configuration ports and stuffs
   ./ Thread function to read from robots
@@ -79,10 +77,18 @@ DONE:
   ./ Decision: Put command into telemetry program different threads
   ./ Design have commloop and commhandle for commands to the bots
   ./ Add local logging: setting up and send info to file and screen
-* Library
+# Library
   ./ Open config (also accepts multiple configs - see HAWC and loads envars)
-* Configs:
+# Configs:
   ./ Make baseconfig and delta config
+# Command Interface:
+  ./ Basic setup with existing parts:
+    ./ Add files: Agentparent, Interparent, Userinter, Configagent
+    ./ Add interfaces and agents: Userinter, configagent
+  ./ Make telemetry agent - get (gets telemetry into memory)
+    ./ setup basic agenst
+    ./ add command for one robot only
+  ./ Send command agent - send robotId command
 
 
   
