@@ -16,6 +16,7 @@ import logging
 import socket
 import json
 from agentparent import AgentParent
+from gbotlib import gbutils
 
 # TeleAgent object
 class CmdAgent(AgentParent):
@@ -57,11 +58,7 @@ class CmdAgent(AgentParent):
             # Print all robot information
             else:
                 # Send command
-                # Get the telemetry data
-                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-                s.connect(self.config['sockets']['comsock'])
-                s.sendall(task.encode())
-                s.close()
+                gbutils.sendcommand(self.config,task)
             # Send return message
             if len(retmsg):
                 respqueue.put("%s: %s" % (self.name, retmsg))

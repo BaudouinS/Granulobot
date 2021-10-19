@@ -1,18 +1,18 @@
-# Granular Robots Configuration File - MGB
-# 
-# Set up path:
-# export PYTHONPATH=/Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
+# Granular Robots Incremental Configuration File - MGB
 
 ### Environment variables
 [envars]
-    GBOT_BASEPATH = /Users/berthoud/instruments/electro/2021granulobots
+    # Environment variable for the path to the Granulobot folder
+    GBOT_BASEPATH = /Users/berthoud/instruments/electro/2021granulobots/Granulobot
+    # Environment variable where you want to put the telemetry, log and other data files
+    GBOT_DATAPATH = /Users/berthoud/instruments/electro/2021granulobots/data
 
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    #telehost = '10.150.2.244'
-    telehost = '192.168.0.100' # .100 .255
+    telehost = '10.150.254.213'
+    #telehost = '192.168.0.100' # .100 .255
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -26,13 +26,20 @@
 #D=05 A=30 B=10'''
 
 
-tasklist = """
+notes = """
 
-Full Task List:
+#### Running the code ####
 
-* Manual
-  * How to run telemetry and command program(s)
-  * How to use simple gui - or at least how to get help on running it.
+export PYTHONPATH=/Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
+cd instruments/electro/2021granulobots/Granulobot
+python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+
+#### Full Task List ####
+
+* Documentation
+  * ICD between the programs and gbot_telemetry
   * How to write a program to run the robots (what is interface and how to use it)
 * Telemetry
   * Thread to log messages (UDP)
@@ -52,8 +59,6 @@ Full Task List:
   * For telemetry agent: get 1 message from robot every seconds for 10s or so
   * For command agent: Send message to all robots (maybe make this gbots_telemetry functionality)
 * Library:
-  * Read from tele (can have robot ID for one robot)
-  * Write to comm (returns error message)
   * Write log message (sender, level, message) - can I use logging for this?
   
 DONE:
@@ -79,6 +84,8 @@ DONE:
   ./ Add local logging: setting up and send info to file and screen
 # Library
   ./ Open config (also accepts multiple configs - see HAWC and loads envars)
+  ./ Read from tele (can have robot ID for one robot)
+  ./ Write to comm (returns error message)
 # Configs:
   ./ Make baseconfig and delta config
 # Command Interface:
@@ -89,6 +96,19 @@ DONE:
     ./ setup basic agenst
     ./ add command for one robot only
   ./ Send command agent - send robotId command
+# Documentation
+  ./ How to run telemetry and command program(s)
+    ./ What to focus on in config file
+  ./ How to use simple gui - or at least how to get help on running it.
+# Other Issues
+  ./ Update for internal AF_INET instead of AF_UNIX - to make windows compatible
+    It "seems" to work but without a good windows computer I can't test it.
+    ./ Change the relevant code in telemetry - test run
+      ./ New keywords: NONE: We use comsock for port, telesock for port and 127.0.0.1.
+    ./ In interface move the tele and comm code to utils and change it there.
+    QUESTION: Keep other interface code avialable if I need to change it back?
+              A: NO I can always look up old code on github and since it's only in
+                 telemetry and the library it will be easy to change.
 
 
   

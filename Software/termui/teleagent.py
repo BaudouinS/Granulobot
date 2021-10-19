@@ -19,6 +19,7 @@ import logging
 import socket
 import json
 from agentparent import AgentParent
+from gbotlib import gbutils
 
 # TeleAgent object
 class TeleAgent(AgentParent):
@@ -60,32 +61,18 @@ class TeleAgent(AgentParent):
             # Print all robot information
             elif 'all' in task[:3].lower():
                 # Get the telemetry data
-                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-                s.connect(self.config['sockets']['telesock'])
-                s.sendall('botdata'.encode())
-                data=s.recv(2048)
-                s.close()
-                # Print the inforamtion
-                retmsg = '\n'
-                teles = data.decode().split('\n')
-                telej = json.loads(teles[0])
-                for nam in telej:
+                telej = gbutils.getelemetry(self.config,'jsonlist')
+                retmsg = ''
+                for nam in telej[0]:
                     retmsg += nam + '\t'
                 retmsg += '\n'
-                for tel in teles:
-                    telej = json.loads(tel)
-                    for nam in telej:
-                        retmsg += str(telej[nam]) + '\t'
+                for tel in telej:
+                    for nam in tel:
+                        retmsg += str(tel[nam]) + '\t'
                     retmsg += '\n'
             # Print raw messages from robot telemetry
             elif 'raw' in task[:3].lower():
-                                # Get the telemetry data
-                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-                s.connect(self.config['sockets']['telesock'])
-                s.sendall('botdata'.encode())
-                data=s.recv(1024)
-                s.close()
-                retmsg = data.decode()
+                retmsg = gbutils.getelemetry(self.config,'raw')
             else:
                 pass
             # Send return message

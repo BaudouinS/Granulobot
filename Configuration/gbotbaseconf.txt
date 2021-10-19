@@ -9,12 +9,15 @@
 
 ### Files and Paths information
 [path]
-# Path information (use export PYTHONPATH=..... in bash)
-pythonpath = $GBOT_BASEPATH/Granulobot/Software
+    # Path information (use export PYTHONPATH=..... in bash)
+    pythonpath = $GBOT_BASEPATH/Software
 
 ### Environment variables
 [envars]
-    GBOT_BASEPATH = /Users/berthoud/instruments/electro/2021granulobots
+    # Environment variable for the path to the Granulobot folder
+    GBOT_BASEPATH = /SET/YOUR/PATH/HERE/TO/Granulobot
+    # Environment variable where you want to put the telemetry, log and other data files
+    GBOT_DATAPATH = /SET/YOUR/PATH/HERE/TO/GbotData
 
 ### Sockets information: How programs communicate with each other
 [sockets]
@@ -25,16 +28,16 @@ pythonpath = $GBOT_BASEPATH/Granulobot/Software
     # port for sending commands to the robots from the computer
     cmdport = 6808 
     # Internal socket for sending commands to the robots
-    comsock = /tmp/gbotcom
+    comsock = 6809
     # Internal socket for getting telemetry from the robots
-    telesock = /tmp/gbotele
+    telesock = 6810
     # Internal socket for log messages
-    logsock = /tmp/gbotlog
+    logsock = 6811
 
 ### Details about logging used by gbot_command and other programs 
 [logging]
     # Name of the log file (allows envvar and strftime formatting)
-    logfile = $GBOT_BASEPATH/data/gbotlog_%Y%m%d.txt
+    logfile = $GBOT_DATAPATH/gbotlog_%Y%m%d.txt
     # Internal socket for log messages - is in [sockets] section
 
 ### Details for the GBOT_TELEMETRY program
@@ -43,7 +46,7 @@ pythonpath = $GBOT_BASEPATH/Granulobot/Software
     idparam = d
     # Location of the file with incoming telemetry
     # (allows envvar and strftime formatting)
-    telefile = $GBOT_BASEPATH/data/gbotelemetry_%y%m%d_%H.txt
+    telefile = $GBOT_DATAPATH/gbotelemetry_%y%m%d_%H.txt
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -61,4 +64,5 @@ pythonpath = $GBOT_BASEPATH/Granulobot/Software
     # Greeting
     greeting = Welcome to Granular Robots user interface: type 'help' for help
     # Helpfile location
-    helpfile = $GBOT_BASEPATH/Granulobot/Software/termui/uihelp.txt
+    helpfile = $GBOT_BASEPATH/Software/termui/uihelp.txt
+    

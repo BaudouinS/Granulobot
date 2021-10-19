@@ -6,6 +6,8 @@
 # Imports
 import os
 import sys
+import socket
+import json
 import configobj
 
 def setconfig(config = None):
@@ -100,3 +102,36 @@ def setconfig(config = None):
     ### Finish up
     confloaded['setconfigmessage'] = retmsg.strip()
     return confloaded
+
+def getelemetry(config = None, format = 'jsonlist'):
+    """ Get telemetry from the robots from the gbot_telemetry program.
+        Config specifies the current configuration file, format
+        specifies the format of the returned data.
+        
+        The following options are available for format:
+        'raw': return the data string as it is received from gbot_telemetry.
+        'jsonlist': return a list of JSON objects.
+        'jsondict': return a dictionary of JSON objects
+    """
+    # Get the telemetry data
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1',int(config['sockets']['telesock'])))
+    s.sendall('botdata'.encode())
+    data=s.recv(2048).decode()
+    s.close()
+    # Return the data
+    if 'raw' in format.lower():
+        return data
+    if 'jsonlist' in format.lower():
+        teles = data.split('\n')
+        return [json.loads(dat) for dat in teles if len(dat) > 5]
+    raise RuntimeError('Invalid "format" value: %s' % format)
+
+def sendcommand(config = None, cmdtext = ''):
+    """ Send a command to the robots through the gbot_telemetry program.
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1',int(config['sockets']['comsock'])))
+    s.sendall(cmdtext.encode())
+    s.close()
+

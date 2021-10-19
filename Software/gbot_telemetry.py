@@ -68,15 +68,9 @@ def queryloop():
     """ Queries receiving loop: To answer queries about robot
         telemetry.
     """
-    # Make sure sockets are not already in use
-    try:
-        os.unlink(config['sockets']['telesock'])
-    except OSError:
-        if os.path.exists(config['sockets']['telesock']):
-            raise
     # Setup command message socket
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.bind(config['sockets']['telesock'])
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(('127.0.0.1',int(config['sockets']['telesock'])))
     sock.listen(5)
     log.info('Listening for Querries')
     while True:
@@ -108,15 +102,9 @@ def cmdloop():
     """ Command receiving loop: To get commands to the
         robots.
     """
-    # Make sure sockets are not already in use
-    try:
-        os.unlink(config['sockets']['comsock'])
-    except OSError:
-        if os.path.exists(config['sockets']['comsock']):
-            raise
     # Setup command message socket
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.bind(config['sockets']['comsock'])
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(('127.0.0.1',int(config['sockets']['comsock'])))
     sock.listen(5)
     log.info('Listening for Commands')
     while True:
