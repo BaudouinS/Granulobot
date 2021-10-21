@@ -16,10 +16,12 @@ import threading
 import socket
 import json
 import logging
+import re
 from gbotlib import gbutils
 
 # Variables
 botele = {} # dictionary with data for each robot
+botime = {} # dictionary with last timestamp for each robot
 config = None
 telefile = None
 exitcmd = False # Boolean indicating if exit command has been set
@@ -51,6 +53,8 @@ def teleloop():
             # Add IP Address
             #data = data.strip() + ' ip=' + cliip
             datajs["ip"]=cliip
+            # Add time stamp
+            datajs["time"]=datetime.now().timestamp()
             # Set values and add data to file
             data = json.dumps(datajs)
             botele[botid] = data
@@ -121,14 +125,15 @@ def cmdhandle(conn, client):
     data = conn.recv(1024)
     #print('comm: received command "%s"' % data.decode())
     comm = data.decode().strip()
+    # Close the connection
+    conn.close()
     # Handle the command
     if 'exit' in comm[:4].lower():
         # Exit command -> Exit
         print("That's All Folks!")
         exitcmd = True
-        conn.close()
     else: # It's a command for a bot:
-        # Get ID of bot
+        # Get first word (usually ID of bot to contact)
         idlen = comm.find(' ')
         botid = comm[:idlen]
         # Check if botid is valid
@@ -136,11 +141,32 @@ def cmdhandle(conn, client):
             # Get a socket and address
             commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             botel = json.loads(botele[botid])
-            botaddr = (botel['ip'],int(config['sockets']['cmdport']))
+            botaddr = (botel['ip'], int(config['sockets']['cmdport']))
+            commsock.sendto(comm[idlen:].strip().encode(), botaddr)
+        elif botid in 'all':
+            # Send message to all robots
+            commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            for id in botele:
+                botel = json.loads(botele[id])
+                botaddr = (botel['ip'], int(config['sockets']['cmdport']))
+                commsock.sendto(comm[idlen:].strip().encode(), botaddr)
+        elif re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',botid):
+            # Send message to IP address
+            if '255' in botid[-3:]:
+                # Set socket for broadcast NEEDS TO BE TESTED
+                commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                # The following lines could be needed but seem not to be
+                #                         socket.IPPROTO_UDP)
+                #commsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                #commsock.bind(('',0))
+                commsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            else:
+                # Set for single IP address
+                commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            botaddr = (botid, int(config['sockets']['cmdport']))
             commsock.sendto(comm[idlen:].strip().encode(), botaddr)
         else:
-            log.warning("Invalid robot ID in %s" % comm)
-        conn.close()
+            log.warning('Invalid robot ID in <%s>' % comm)
 
 ### Preparation
 # Load configuration

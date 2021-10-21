@@ -7,10 +7,16 @@
 
 helpmsg = """Command Agent: Send commands to the robots.
 Possible commands are:
-    cmd "robot_id" "command" - send command to a robot
+    cmd <robot_id> <command> - send command to a robot
+    cmd all <command> - sends the command to all robots
+    cmd <ip address> <command> - sends the command to specified IP address
+        Boradcast is sent if the IP address ends with .255
     cmd help - returns this message
-    cmd exit - exits the command agent"""
-    
+    cmd exit - exits the command agent
+    cmd quitele - sends shutdown command to GBOT_TELEMETRY program
+The < > brackets indicate text needed to be entered and are not
+necessary."""
+
 import queue
 import logging
 import socket
@@ -49,8 +55,12 @@ class CmdAgent(AgentParent):
             else:
                 continue
             retmsg = ''
+            # Quit telemetry program
+            if 'quitele' in task[:7].lower():
+                retmsg = 'Shutting down gbot_telemetry'
+                gbutils.sendcommand(self.config,'exit')
             # Exit
-            if 'exit' in task[:4].lower():
+            elif 'exit' in task[:4].lower():
                 self.exit = True
             # Help message
             elif 'help' in task[:4].lower():

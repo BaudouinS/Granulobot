@@ -8,6 +8,7 @@ import os
 import sys
 import socket
 import json
+from datetime import datetime
 import configobj
 
 def setconfig(config = None):
@@ -103,10 +104,17 @@ def setconfig(config = None):
     confloaded['setconfigmessage'] = retmsg.strip()
     return confloaded
 
-def getelemetry(config = None, format = 'jsonlist'):
+def getelemetry(config = None, format = 'jsonlist', timeout = 5.0):
     """ Get telemetry from the robots from the gbot_telemetry program.
-        Config specifies the current configuration file, format
-        specifies the format of the returned data.
+        
+        config: specifies the current configuration file
+        format: specifies the format of the returned data
+        timeout: puts a limit on the age of the entries. As the telemetry
+                 only contains the most recent entry from each robot, the
+                 ones not connected anymore are removed.
+                 This parameter does not work with format='raw' option.
+                 If timeout <=0 all all telemetry entries are returned.
+                
         
         The following options are available for format:
         'raw': return the data string as it is received from gbot_telemetry.
@@ -121,10 +129,22 @@ def getelemetry(config = None, format = 'jsonlist'):
     s.close()
     # Return the data
     if 'raw' in format.lower():
+        # Raw data
         return data
     if 'jsonlist' in format.lower():
+        # JSON list data
         teles = data.split('\n')
-        return [json.loads(dat) for dat in teles if len(dat) > 5]
+        jsons = [json.loads(dat) for dat in teles if len(dat) > 5]
+        # If needed remove time 
+        if timeout > 0:
+            tnow = datetime.now().timestamp()
+            jsonews = []
+            for jsn in jsons:
+                if tnow-jsn['time'] < timeout:
+                    jsonews.append(jsn)
+            return jsonews
+        else:
+            return jsons
     raise RuntimeError('Invalid "format" value: %s' % format)
 
 def sendcommand(config = None, cmdtext = ''):

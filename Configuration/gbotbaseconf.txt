@@ -47,11 +47,13 @@
     # Location of the file with incoming telemetry
     # (allows envvar and strftime formatting)
     telefile = $GBOT_DATAPATH/gbotelemetry_%y%m%d_%H.txt
+    # Timeout to remove bots from the telemetry list if no message is received (seconds)
+    gbotimeout = 5
 
 ### Details for the simbot simulated robot
 [simbot]
     # Telemetry Reporting Frequency (Hz)
-    telefreq = 2.0
+    telefreq = 1.0
     # Telemetry Text: Multi-line string, the bot cycles through the lines
     teletext = '''{"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
 {"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
