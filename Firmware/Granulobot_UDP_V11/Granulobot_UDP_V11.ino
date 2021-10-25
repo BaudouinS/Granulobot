@@ -134,8 +134,8 @@ const char * pwd = "93409582";
 // it can be ip address of the server or 
 // a network broadcast address
 // here is broadcast address
-//const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
-const char * udpAddress = "192.168.2.1"; //255"; //broadcasting address= the program will read from this address
+const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
+//const char * udpAddress = "192.168.0.109"; //255"; //broadcasting address= the program will read from this address
 //const char * PadAddress = "192.168.0.100";
 //const char * udpAddress = "10.0.0.255"; //broadcasting address= the program will read from this address
 //const char * PadAddress = "10.0.0.15";
@@ -307,7 +307,7 @@ void setup(){
   
   Serial.begin(115200);
   Serial.println("RESET");
-  Serial.println("Firmware Granulobot OSC V9");
+  Serial.println("Firmware Granulobot UDP V11");
 
 
 //WIFI UDP SETUP
@@ -525,13 +525,30 @@ void loop(){
       memset(buffer4, 0, 8);     
       Udp.parsePacket(); 
       if(Udp.read(buffer4, 8) > 0){
+      Serial.println("Message received");
      
       MatchState ms;
       ms.Target(buffer4);      
       Serial.println(buffer4);
+
+
+//const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
+//const int localPort = 6808;//4210;
+//const int outPort = 6807;
       
-      char resultPoke=ms.Match ("(P)",0);
-        if (resultPoke == REGEXP_MATCHED){
+      char resultIP=ms.Match ("(IP )(%d+)(.)(%d+).(%d+).(%d+)(;)",0);
+      Serial.println(resultIP);
+      if (resultIP == REGEXP_MATCHED){
+          char captureBufIP [8];
+          udpAddress=ms.GetCapture (captureBufIP,2);
+          Serial.print("Telemetry com IP changed to ");Serial.println(udpAddress);
+      }  
+
+      
+      char resultPoke=ms.Match ("P",0);
+      Serial.println(resultPoke);
+      if (resultPoke == REGEXP_MATCHED){
+          Serial.println("cmd Poke");
           Poke=1; 
       }  
 
@@ -562,15 +579,16 @@ void loop(){
 
       char resultSp=ms.Match ("(S)(%d)(%d+)(;)",0);
         if (resultSp == REGEXP_MATCHED){
-          char captureBuf1 [8];
-          Motor.Speed=atoi(ms.GetCapture (captureBuf1,2)); 
+          char captureBufSp [8];
+          Motor.Speed=atoi(ms.GetCapture (captureBufSp,2)); 
+          Serial.println("Motor.Speed=");Serial.println(Motor.Speed);
           pidcontroller.limit( Motor.Speed*(-1), Motor.Speed); // Limit the PID output between -Motor.Speed to Motor.Speed, this is important to get rid of integral windup!
         }
       
-      char resultA=ms.Match ("(S)(%d)(%d+)(;)",0);
+      char resultA=ms.Match ("(A)(%d)(%d+)(;)",0);
         if (resultA == REGEXP_MATCHED){
-          char captureBuf2 [8];
-          Motor.Angle_target=atoi(ms.GetCapture (captureBuf2,2));  
+          char captureBufA [8];
+          Motor.Angle_target=atoi(ms.GetCapture (captureBufA,2));  
         }
 
       }

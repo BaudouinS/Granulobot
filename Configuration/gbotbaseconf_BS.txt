@@ -1,0 +1,69 @@
+# Granular Robots Configuration File
+#     Base File
+#
+# This is the base configuration file for the Granular Robots
+# project. If you need personal changes to the configuration,
+# make your personal configuration file to load on top of this
+# file. If you have changes that need to be used by all
+# Granular Robots users then make the changes in this file.
+
+### Files and Paths information
+[path]
+# Path information (use export PYTHONPATH=..... in bash)
+pythonpath = $GBOT_BASEPATH/Granulobot/Software
+
+### Environment variables
+[envars]
+    GBOT_BASEPATH = C:/Users/bsain/Dropbox/Physique/Blob-JAMoEBA
+
+### Sockets information: How programs communicate with each other
+[sockets]
+    # host for incoming telemetry to the robots
+    telehost = '192.168.0.100' 
+    # GBOT - port for telemetry from the robots to computer
+    teleport = 6807  # looks like "GBOT"
+    # port for sending commands to the robots from the computer
+    cmdport = 6808 
+    # Internal socket for sending commands to the robots
+    comsock = /tmp/gbotcom
+    # Internal socket for getting telemetry from the robots
+    telesock = /tmp/gbotele
+    # Internal socket for log messages
+    logsock = /tmp/gbotlog
+
+### Details about logging used by gbot_command and other programs 
+[logging]
+    # Name of the log file (allows envvar and strftime formatting)
+    logfile = $GBOT_BASEPATH/Gbotdata/gbotlog_%Y%m%d.txt
+
+### Details for the GBOT_TELEMETRY program
+[telemetry]
+    # Telemetry parameter to use to identify the robots
+    idparam = d
+    # Location of the file with incoming telemetry
+    # (allows envvar and strftime formatting)
+    #telefile = C:/Users/bsain/Dropbox/Physique/Blob-JAMoEBA/Gbotdata/gbotelemetry_%y%m%d_%H.txt
+    telefile = C:/Users/bsain/Dropbox/Physique/Blob-JAMoEBA/Gbotdata/gbotelemetry_%y%m%d_%H.txt
+
+### Details for the simbot simulated robot
+[simbot]
+    # Telemetry Reporting Frequency (Hz)
+    telefreq = 2.0
+    # Telemetry Text: Multi-line string, the bot cycles through the lines
+    teletext = '''{"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
+{"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
+{"A":5,"t":97799,"d":7,"x":0.052611,"y":-0.0957011,"z":9.818911,"u":0.001211,"v":0.00711,"w":-0.006111}'''
+#    teletext = '''D=01 A=25 B=30
+#D=05 A=30 B=10'''
+
+### Details for the user interface program
+[userinterface]
+    # Greeting
+    greeting = Welcome to Granular Robots user interface: type 'help' for help
+    # Helpfile location
+    helpfile = $GBOT_BASEPATH/Granulobot/Software/termui/uihelp.txt
+
+comm=""" Comments
+set PYTHONPATH=C:/Users/bsain/Dropbox/Physique/Blob-JAMoEBA/Granulobot/Software
+
+"""
