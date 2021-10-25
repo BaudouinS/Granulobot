@@ -16,6 +16,9 @@ import threading
 import socket
 import json
 import logging
+import logging.handlers
+import socketserver
+import pickle
 import re
 from gbotlib import gbutils
 
@@ -28,7 +31,8 @@ exitcmd = False # Boolean indicating if exit command has been set
 
 # Functions
 def teleloop():
-    """ Telemetry Receiving Loop
+    """ Telemetry Receiving Loop: Reveives telemetry
+        from the robots
     """
     global botele
     # Set up socket
@@ -65,7 +69,7 @@ def teleloop():
             telefile.write(dataline)
             telefile.flush()
         except BaseException as e:
-            log.warn('Error receiving from %s message %s' % (cliip, data))
+            log.warn('Error receiving telemetry from %s, message %s' % (cliip, data))
             raise e # in case there's a bug
         
 def queryloop():
@@ -103,8 +107,8 @@ def queryhandle(conn, client):
         conn.close()
  
 def cmdloop():
-    """ Command receiving loop: To get commands to the
-        robots.
+    """ Command receiving loop: To receive commands to forward
+        to the robots.
     """
     # Setup command message socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -168,6 +172,28 @@ def cmdhandle(conn, client):
         else:
             log.warning('Invalid robot ID in <%s>' % comm)
 
+def logloop():
+    """ Logging Receiving Loop: Reveives log messages from
+        internal programs
+    """
+    # Set up socket
+    serveraddr = ('127.0.0.1', int(config['sockets']['logsock']))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind(serveraddr)
+    log.info('Logging Server Listening')
+    # Main loop
+    while True:
+        data, cliip = ['','']
+        try:
+            # Wait for new data package
+            data, (cliip, cliport) = sock.recvfrom(2048)
+            logobj = pickle.loads(data[4:])
+            logrec = logging.makeLogRecord(logobj)
+            logging.getLogger(logrec.name).handle(logrec)
+        except BaseException as e:
+            log.warn('Error receiving log from %s, message %s' % (cliip, data))
+            raise e # in case there's a bug
+
 ### Preparation
 # Load configuration
 config = gbutils.setconfig(sys.argv)
@@ -196,10 +222,14 @@ querythr.start()
 # Setup command thread to send commands to the robots
 cmdthr = threading.Thread(target = cmdloop, daemon = True)
 cmdthr.start() 
+# Setup logging loop to receive log messages
+logthr = threading.Thread(target = logloop, daemon = True)
+logthr.start()
 
 ### Main Loop send data
 while not exitcmd:
-    time.sleep(1.0) # because no one is in a hurry to check if we can exit
+    # because no one is in a hurry to check if we can exit
+    time.sleep(1.0) 
 ### close
 log.info('Last telementry entries:')
 for botid in botele:

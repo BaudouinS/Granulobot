@@ -43,6 +43,9 @@ def gbotcontrol():
     """
     # Load config file
     config = gbutils.setconfig(sys.argv)
+    # Setup logging
+    gbutils.setuplogging(config)
+    logging.getLogger('TermUI').info('Terminal User Interface: Starting UP')
     # Make interfaces and agents
     inusr = InterUser(config, 'User')
     agconf = ConfigAgent(config, 'Conf')

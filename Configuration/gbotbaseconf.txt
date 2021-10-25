@@ -27,11 +27,11 @@
     teleport = 6807  # looks like "GBOT"
     # port for sending commands to the robots from the computer
     cmdport = 6808 
-    # Internal socket for sending commands to the robots
+    # Internal socket for sending commands to the robots through gbot_telemetry
     comsock = 6809
-    # Internal socket for getting telemetry from the robots
+    # Internal socket for getting robot telemetry from the gbot_telemetry
     telesock = 6810
-    # Internal socket for log messages
+    # Internal socket for sending log messages to be logged by gbot_telemetry
     logsock = 6811
 
 ### Details about logging used by gbot_command and other programs 

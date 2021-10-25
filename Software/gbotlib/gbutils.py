@@ -10,6 +10,7 @@ import socket
 import json
 from datetime import datetime
 import configobj
+import logging, logging.handlers
 
 def setconfig(config = None):
     """ Loads the given config file and returns the config object.
@@ -104,7 +105,7 @@ def setconfig(config = None):
     confloaded['setconfigmessage'] = retmsg.strip()
     return confloaded
 
-def getelemetry(config = None, format = 'jsonlist', timeout = 5.0):
+def getelemetry(config = None, format = 'jsonlist', timeout = None):
     """ Get telemetry from the robots from the gbot_telemetry program.
         
         config: specifies the current configuration file
@@ -121,6 +122,9 @@ def getelemetry(config = None, format = 'jsonlist', timeout = 5.0):
         'jsonlist': return a list of JSON objects.
         'jsondict': return a dictionary of JSON objects
     """
+    # Set timeout from config
+    if timeout == None:
+        timeout = float(config['telemetry']['gbotimeout'])
     # Get the telemetry data
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('127.0.0.1',int(config['sockets']['telesock'])))
@@ -155,3 +159,12 @@ def sendcommand(config = None, cmdtext = ''):
     s.sendall(cmdtext.encode())
     s.close()
 
+def setuplogging(config = None):
+    """ Sets up logging such that messages are sent to the open
+        logport in gbot_telemetry.
+    """
+    rlog = logging.getLogger('')
+    rlog.setLevel(logging.DEBUG)
+    shand = logging.handlers.DatagramHandler('127.0.0.1',int(config['sockets']['logsock']))
+    rlog.addHandler(shand)
+    
