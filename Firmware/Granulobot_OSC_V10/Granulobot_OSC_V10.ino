@@ -71,12 +71,19 @@
 /////USER PARAMETERS//////////////////
 
 /* WiFi network name and password */
+//TP link mini router
+////dedicated local network
+//const char * ssid = "TP-Link_C1BA";
+//const char * pwd = "93409582";
+//// Broadcast IP address to send UDP data to.
+//const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
 
+//Netgear Router
 //dedicated local network
-const char * ssid = "TP-Link_C1BA";
-const char * pwd = "93409582";
+const char * ssid = "NETGEAR21";
+const char * pwd = "strongmoon546";
 // Broadcast IP address to send UDP data to.
-const char * udpAddress = "192.168.0.255"; //broadcasting address= the program will read from this address
+const char * udpAddress = "192.168.1.255"; //broadcasting address= the program will read from this address
 
 //Home wifi
 //const char * ssid = "HOME-26E2";

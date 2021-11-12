@@ -11,8 +11,10 @@
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.100.255' 
-    telehost = '192.168.0.103' # .100 .255
-
+    #telehost = '192.168.0.103' 
+    telehost = '192.168.1.3'
+    #telehost='172.16.1.183'
+ 
 ### Details for the simbot simulated robot
 [simbot]
     # Telemetry Reporting Frequency (Hz)
