@@ -18,6 +18,9 @@
     GBOT_BASEPATH = /SET/YOUR/PATH/HERE/TO/Granulobot
     # Environment variable where you want to put the telemetry, log and other data files
     GBOT_DATAPATH = /SET/YOUR/PATH/HERE/TO/GbotData
+    # Environment variable where to find bin file to download
+    FIRMWARE_BINFILE1 = $GBOT_BASEPATH/Firmware/Granulobot_UDP_V11/Granulobot_UDP_V11.bin
+    FIRMWARE_BINFILE2 = $GBOT_BASEPATH/Firmware/Granulobot_UDP_V12/Granulobot_UDP_V12.bin
 
 ### Sockets information: How programs communicate with each other
 [sockets]
@@ -68,3 +71,8 @@
     # Helpfile location
     helpfile = $GBOT_BASEPATH/Software/termui/uihelp.txt
     
+### Information for the uploading program.
+[upload]
+    # Which program to use for each robot (uses config[telemetry][idparam] to id robots)
+    1: $FIRMWARE_BINFILE1
+    2: $FIRMWARE_BINFILE2

@@ -1,9 +1,13 @@
-""" GBOT_READER
+""" GBOT_TELEMETRY
 
     Data reader for the Granular Robots project.
     This program receives data from the robots, puts all received
     messages in a file and makes the data available for query on
     an internal port.
+    
+    Usage:
+        python gbot_telemetry.py configfile.txt
+    
 """
 
 ### Setup
@@ -31,7 +35,7 @@ exitcmd = False # Boolean indicating if exit command has been set
 
 # Functions
 def teleloop():
-    """ Telemetry Receiving Loop: Reveives telemetry
+    """ Telemetry Receiving Loop: Receives telemetry
         from the robots
     """
     global botele

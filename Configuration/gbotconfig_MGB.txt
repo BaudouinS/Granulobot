@@ -11,8 +11,9 @@
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    telehost = '10.150.98.116'
+    #telehost = '10.150.98.116'
     #telehost = '192.168.0.100' # .100 .255
+    telehost = '192.168.187.153'
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -35,14 +36,31 @@ cd instruments/electro/2021granulobots/Granulobot
 python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 
 #### Full Task List ####
 
+* Test:
+  * If open port do I receive both direct messages and broadcast over this address?
+  * i.e. Try to send message to broadcast to server.
+* Firmwareupload
+  ./ Make basic file: header with usage manual and stuffs (requires config)
+  * Copy upload script to support (or gbotlib?)
+  * Define config file parameters
+  * Programming:
+    * Setup logging (output and gbot telemetry logfile)
+    * Program find datalog file
+    * Load ip and type of each robot
+    * Send file to each robot
+  * Testing
+    * Make test log file for 2 robots
+    * Test locally with 2 robots (2 different programs)
+    * Test while gbot_telemetry is running and confirm receipt of logs
 * Telemetry
   # Have the computer announce it's IP to the robots (broadcast command)
     * IDEA: add a command to the robots with it's IP then the robots send to that IP
     * Question: how to make send ONLY to that IP or add that IP to the list? 
-      NO but IP can be broatcasting
+      NO but IP can be broadcasting
     * Send at startup, by request and/or regular intervals (not all the time)
     * IDEA: restrict boradcasting IP range in router (see if faster messages)
     * TODO: Implement telip command for the robots to receive new telemetry IP address
