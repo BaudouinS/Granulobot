@@ -1,0 +1,116 @@
+# Granular Robots Incremental Configuration File - MGB
+
+### Environment variables
+[envars]
+    # Environment variable for the path to the Granulobot folder
+    GBOT_BASEPATH = C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Granulobot
+    # Environment variable where you want to put the telemetry, log and other data files
+    GBOT_DATAPATH = C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Gbotdata
+
+### Sockets information: How programs communicate with each other
+[sockets]
+    # host for incoming telemetry to the robots
+    #telehost = '192.168.100.255' 
+    #telehost = '192.168.0.103' 
+    telehost = '192.168.1.3'
+    #telehost='172.16.1.183'
+ 
+### Details for the simbot simulated robot
+[simbot]
+    # Telemetry Reporting Frequency (Hz)
+    telefreq = 2.0
+    # Telemetry Text: Multi-line string, the bot cycles through the lines
+    teletext = '''{"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
+{"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
+{"A":5,"t":97799,"d":7,"x":0.052611,"y":-0.0957011,"z":9.818911,"u":0.001211,"v":0.00711,"w":-0.006111}'''
+#    teletext = '''D=01 A=25 B=30
+#D=05 A=30 B=10'''
+
+
+notes = """
+
+#### Running the code ####
+
+set PYTHONPATH=C:/Users/bsain/Dropbox/Physique/Blob-JAMoEBA/Granulobot/Software
+cd C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Granulobot
+python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
+python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
+python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
+
+#### Full Task List ####
+
+* Documentation
+  * ICD between the programs and gbot_telemetry
+  * How to write a program to run the robots (what is interface and how to use it)
+* Telemetry
+  * Thread to log messages (UDP)
+  * Make sure subthreads die after 1s if no data (crash with error from timeout?)
+  * Logging set up for less messages in terminal (INFO in terminal but DEBUG in file)
+* Commandinterface (UDP)
+  * On startup check if telemetry is running (after 1s delay) and report error if not.
+  * Add Socket interface and (simple) web interface
+  * Userinterface: allow uparrow for last cmd, allow getting messages while writing (look at vtcode)
+    * google how to do it (as terminal UI), if needed uset getch() equivalent and micromanage
+    ==>> Put gettele and sendcmd into library
+  * Config agent: make better all commands
+  * Config agent: run through all commands and bugcheck
+  * Telemetry and command agent: add timeouts and error catch if things go bad
+    * I.e. telecmd program not running, not answering
+  * For telemetry agent: flexible commands commlist (ip, last entry, MAC) varlist (acc, vel, motor settings)
+  * For telemetry agent: get 1 message from robot every seconds for 10s or so
+  * For command agent: Send message to all robots (maybe make this gbots_telemetry functionality)
+* Library:
+  * Write log message (sender, level, message) - can I use logging for this?
+  
+DONE:
+# Testrobot: prog that sends string NHz and listens on port to receive messages
+  ./ Set up program
+  ./ Get config (use library)
+  ./ Set ports
+  ./ Run delay
+  ./ Report telemetry
+  ./ Check for commands
+# Telemetry
+  ./ Basic loop setup and memory for messages: Dict, open file
+  ./ Set up configuration ports and stuffs
+  ./ Thread function to read from robots
+    ./ add detection of IP address and add to message
+    ./ Make it deamon so off when shutodwn
+  ./ Thread for respond to telequerry
+    ./ make new thread for each connection to avoid blocking main program
+  ./ Exit if prompted from telequerry
+  ./ Connect real robot
+  ./ Decision: Put command into telemetry program different threads
+  ./ Design have commloop and commhandle for commands to the bots
+  ./ Add local logging: setting up and send info to file and screen
+# Library
+  ./ Open config (also accepts multiple configs - see HAWC and loads envars)
+  ./ Read from tele (can have robot ID for one robot)
+  ./ Write to comm (returns error message)
+# Configs:
+  ./ Make baseconfig and delta config
+# Command Interface:
+  ./ Basic setup with existing parts:
+    ./ Add files: Agentparent, Interparent, Userinter, Configagent
+    ./ Add interfaces and agents: Userinter, configagent
+  ./ Make telemetry agent - get (gets telemetry into memory)
+    ./ setup basic agenst
+    ./ add command for one robot only
+  ./ Send command agent - send robotId command
+# Documentation
+  ./ How to run telemetry and command program(s)
+    ./ What to focus on in config file
+  ./ How to use simple gui - or at least how to get help on running it.
+# Other Issues
+  ./ Update for internal AF_INET instead of AF_UNIX - to make windows compatible
+    It "seems" to work but without a good windows computer I can't test it.
+    ./ Change the relevant code in telemetry - test run
+      ./ New keywords: NONE: We use comsock for port, telesock for port and 127.0.0.1.
+    ./ In interface move the tele and comm code to utils and change it there.
+    QUESTION: Keep other interface code avialable if I need to change it back?
+              A: NO I can always look up old code on github and since it's only in
+                 telemetry and the library it will be easy to change.
+
+
+  
+"""
