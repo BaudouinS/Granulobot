@@ -74,5 +74,7 @@
 ### Information for the uploading program.
 [upload]
     # Which program to use for each robot (uses config[telemetry][idparam] to id robots)
-    1: $FIRMWARE_BINFILE1
-    2: $FIRMWARE_BINFILE2
+    cmd = python $GBOT_BASEPATH/Software/utils/espota.py -d -i %s -f %s -p 3232
+    1 = $FIRMWARE_BINFILE1
+    5 = $FIRMWARE_BINFILE2
+    6 = $FIRMWARE_BINFILE1

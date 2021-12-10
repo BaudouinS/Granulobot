@@ -6,14 +6,18 @@
     GBOT_BASEPATH = /Users/berthoud/instruments/electro/2021granulobots/Granulobot
     # Environment variable where you want to put the telemetry, log and other data files
     GBOT_DATAPATH = /Users/berthoud/instruments/electro/2021granulobots/data
+    # Envar for path to test bin files
+    FIRMWARE_BINFILE1 = $GBOT_BASEPATH/TestCode/TinyPicoBinTests/TinyPICO_OTA.ino.pico32.CRed.bin
+    FIRMWARE_BINFILE2 = $GBOT_BASEPATH/TestCode/TinyPicoBinTests/TinyPICO_OTA.ino.pico32.PGreen.bin
+    FIRMWARE_BINFILE3 = $GBOT_BASEPATH/TestCode/TinyPicoBinTests/TinyPICO_OTA.ino.pico32.YBlue.bin
 
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    #telehost = '10.150.98.116'
+    telehost = '10.150.11.230'
     #telehost = '192.168.0.100' # .100 .255
-    telehost = '192.168.187.153'
+    #telehost = '192.168.187.153'
 
 ### Details for the simbot simulated robot
 [simbot]
@@ -26,6 +30,11 @@
 #    teletext = '''D=01 A=25 B=30
 #D=05 A=30 B=10'''
 
+### Information for the uploading program.
+[upload]
+    # Which program to use for each robot (uses config[telemetry][idparam] to id robots)
+    1 = $FIRMWARE_BINFILE2
+    5 = $FIRMWARE_BINFILE3
 
 notes = """
 
@@ -45,13 +54,13 @@ python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbot
   * i.e. Try to send message to broadcast to server.
 * Firmwareupload
   ./ Make basic file: header with usage manual and stuffs (requires config)
-  * Copy upload script to support (or gbotlib?)
-  * Define config file parameters
+  ./ Copy upload script to support (or gbotlib?)
+  ./ Define config file parameters
   * Programming:
-    * Setup logging (output and gbot telemetry logfile)
-    * Program find datalog file
-    * Load ip and type of each robot
-    * Send file to each robot
+    ./ Setup logging (output and gbot telemetry logfile)
+    ./ Program find datalog file
+    ./ Load json of each robot
+    ./ Send file to each robot
   * Testing
     * Make test log file for 2 robots
     * Test locally with 2 robots (2 different programs)

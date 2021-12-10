@@ -21,7 +21,7 @@
 
 ### Setup
 # Imports
-import os
+import os, sys, logging
 import json
 from datetime import datetime, timedelta
 from gbotlib import gbutils
@@ -33,26 +33,38 @@ config = gbutils.setconfig(sys.argv)
 logging.basicConfig(level = 'DEBUG')
 # Set up logging handler which will send logs to gbot_telemetry if it's running
 gbutils.setuplogging(config)
-log = logging.getlogger('Upload')
+log = logging.getLogger('Upload')
 ### Get database of robots from latest datalog
 # Find latest logfile (go back by hours until found or Nhours > 24
 backsec = 0
-telfname = ''
-for backsec in range(0,86400,300):
-    telfname = config['telemetry']['telefile']
+telefname = ''
+for backsec in range(0,86400,900):
+    telefname = config['telemetry']['telefile']
     telefname = os.path.expandvars(telefname)
-    telefname = (datetime.now()+timedelta(seconds=backsec)).strftime(telefname)
-    log.debug('Looking for %s' % telfname)
-    if os.path.exists(telfname):
+    telefname = (datetime.now()-timedelta(seconds=backsec)).strftime(telefname)
+    log.debug('Looking for %s' % telefname)
+    if os.path.exists(telefname):
         break
-    telfname = ''
-if not telfname:
-    log.error('Unable to find Telemetry file - exiting')
-    return 1
-# Get robot entries from all telemetry file
-telines = [l.strip() for l in open(telfname) if len(l) > 5]
+    telefname = ''
+if not telefname:
+    msg = 'Unable to find Telemetry file - exiting'
+    log.error(msg)
+    raise(RuntimeError(msg))
+log.info('Found telemetry file %s' % telefname)
+# Get robot entries from telemetry file
+telines = [l.strip() for l in open(telefname) if len(l) > 5]
 botele = {}
-for l in telines:
-    
+for l in telines[-10:]:
+    # Get json
+    rjson = json.loads(l[l.index('{'):])
+    botele[rjson[config['telemetry']['idparam']]]=rjson
+for r in botele:
+    log.debug('Bot %s: %s' % (repr(r), repr(botele[r])))
 ### Upload to the robots
-
+for r in botele:
+    # Get file (run expandvars once here, once later)
+    binfile = os.path.expandvars(config['upload'][str(r)])
+    cmd = config['upload']['cmd'] % (botele[r]['ip'], binfile)
+    cmd = os.path.expandvars(cmd)
+    log.info('Running %s' % cmd)
+    os.system(cmd)
