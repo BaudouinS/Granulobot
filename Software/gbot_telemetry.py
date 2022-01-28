@@ -125,7 +125,7 @@ def cmdloop():
                          args = (conn, client) ).start()
 
 def cmdhandle(conn, client):
-    """ Queries handling function
+    """ Commands handling function
     """
     global exitcmd
     # Receive the command
@@ -212,6 +212,7 @@ fhand = logging.FileHandler(logfname)
 fhand.setFormatter(logging.Formatter(logformat))
 logging.getLogger().addHandler(fhand)
 log.debug('Setup logging, logfile = %s' % logfname)
+log.debug('Loaded Configuration = %s' % repr(config))
 # Open telemetry file
 telefname = config['telemetry']['telefile']
 telefname = os.path.expandvars(telefname)

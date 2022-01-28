@@ -15,7 +15,7 @@ import logging, logging.handlers
 def setconfig(config = None):
     """ Loads the given config file and returns the config object.
     
-        If a list of files is given, the first connfiguration is
+        If a list of files is given, the first configuration is
         loaded and further configurations are loaded overwriting
         already existing values. This allows the use of baseconfig
         and additional delta configs.
