@@ -132,6 +132,7 @@ def cmdhandle(conn, client):
     #print('comm: connection from %s' % client)
     data = conn.recv(1024)
     #print('comm: received command "%s"' % data.decode())
+    log.debug('comm: received command "%s"' % data.decode())
     comm = data.decode().strip()
     # Close the connection
     conn.close()

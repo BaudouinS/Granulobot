@@ -7,7 +7,7 @@
     - Get Telemetry data from the robots
     - Send commands to the robot
     
-    Usage: python controll.py conigfile.txt
+    Usage: python gbot_termui.py conigfile.txt
     
     Process: The programs has interfaces (user, web, port) which send
         tasks to agents (telemetry, command). Each interface and agent has its
