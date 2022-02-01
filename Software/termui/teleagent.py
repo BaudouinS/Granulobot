@@ -82,9 +82,14 @@ class TeleAgent(AgentParent):
         """ Returns the formatted table of data values
         """
         retmsg = ''
+        # check if list is empty
+        if not len(telej):
+            return 'No robot data'
+        # get names
         for nam in telej[0]:
             retmsg += nam + '\t'
         retmsg += '\n'
+        # fill with data
         for tel in telej:
             for nam in tel:
                 retmsg += str(tel[nam]) + '\t'
