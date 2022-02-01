@@ -15,8 +15,8 @@
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.1.7' 
-    telehost = 172.20.10.105
-    #telehost = '10.150.11.230'
+    #telehost = 172.20.10.105
+    telehost = '10.150.71.216'
     #telehost = '192.168.0.100' # .100 .255
     #telehost = '192.168.187.153'
 

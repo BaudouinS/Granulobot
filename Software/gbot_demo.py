@@ -20,7 +20,7 @@ import sys
 from gbotlib import gbutils # Library to read / send gbot commands
 
 # Read configuration
-config = gbutils.setcnofig(sys.argv)
+config = gbutils.setconfig(sys.argv)
 
 # Get and print current telemetry
 # Details on the getelemetry command are described in gbutils.py
