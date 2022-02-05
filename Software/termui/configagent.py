@@ -9,6 +9,7 @@
 helpmsg = """Configuration Agent: Read and edit current system configuration.
 Possible commands are:
     conf all - returns the configuration
+    conf sectionlist - returns list of all configuration sections
     conf "section" - returns the contents of a particular config section
     conf "section" "keyword" - returns the value of a particular keyword
     conf "section" "keyword" "value" - sets the value for that particular keyword
@@ -66,13 +67,22 @@ class ConfigAgent(AgentParent):
                 #retmsg = sio.getvalue()
                 #sio.close()
                 retmsg = repr(self.config)
+            # Print section list
+            elif 'sectionlist' in task[:11].lower():
+                retmsg = 'List of config sections'
+                for k in self.config.keys():
+                    retmsg += '\n' + k
             # Check if it's just sectionname -> print section
             elif ' ' not in task:
                 sect = task.strip()
                 if sect in self.config:
-                    retmsg = '[%s]\n' % sect
-                    for k in self.config[sect]:
-                        retmsg += '%s = %s\n' % (k, self.config[sect][k]) 
+                    # if it's a dict - print contents
+                    if isinstance(self.config[sect], dict):
+                        retmsg = '[%s]' % sect
+                        for k in self.config[sect]:
+                            retmsg += '\n    %s = %s' % (k, self.config[sect][k]) 
+                    else:
+                        retmsg = '%s = %s' % (sect, self.config[sect])
                 else:
                     retmsg = 'Invalid section: %s' % sect
             # We have at least section and key

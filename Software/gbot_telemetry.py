@@ -7,6 +7,8 @@
     
     Usage:
         python gbot_telemetry.py configfile.txt
+        
+    See google doc for more information on using gbot_telemetry.
     
 """
 
@@ -142,40 +144,42 @@ def cmdhandle(conn, client):
         print("That's All Folks!")
         exitcmd = True
     else: # It's a command for a bot:
-        # Get first word (usually ID of bot to contact)
+        # Get first word, ID of bots to contact
         idlen = comm.find(' ')
-        botid = comm[:idlen]
-        # Check if botid is valid
-        if botid in botele:
-            # Get a socket and address
-            commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            botel = json.loads(botele[botid])
-            botaddr = (botel['ip'], int(config['sockets']['cmdport']))
-            commsock.sendto(comm[idlen:].strip().encode(), botaddr)
-        elif botid in 'all':
-            # Send message to all robots
-            commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            for id in botele:
-                botel = json.loads(botele[id])
+        botids = comm[:idlen].split('/')
+        # Loop over botids
+        for botid in botids:
+            # Check if botid is valid
+            if botid in botele:
+                # Get a socket and address
+                commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                botel = json.loads(botele[botid])
                 botaddr = (botel['ip'], int(config['sockets']['cmdport']))
                 commsock.sendto(comm[idlen:].strip().encode(), botaddr)
-        elif re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',botid):
-            # Send message to IP address
-            if '255' in botid[-3:]:
-                # Set socket for broadcast NEEDS TO BE TESTED
+            elif botid in 'all':
+                # Send message to all robots
                 commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                # The following lines could be needed but seem not to be
-                #                         socket.IPPROTO_UDP)
-                #commsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                #commsock.bind(('',0))
-                commsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+                for id in botele:
+                    botel = json.loads(botele[id])
+                    botaddr = (botel['ip'], int(config['sockets']['cmdport']))
+                    commsock.sendto(comm[idlen:].strip().encode(), botaddr)
+            elif re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',botid):
+                # Send message to IP address
+                if '255' in botid[-3:]:
+                    # Set socket for broadcast NEEDS TO BE TESTED
+                    commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    # The following lines could be needed but seem not to be
+                    #                         socket.IPPROTO_UDP)
+                    #commsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                    #commsock.bind(('',0))
+                    commsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+                else:
+                    # Set for single IP address
+                    commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                botaddr = (botid, int(config['sockets']['cmdport']))
+                commsock.sendto(comm[idlen:].strip().encode(), botaddr)
             else:
-                # Set for single IP address
-                commsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            botaddr = (botid, int(config['sockets']['cmdport']))
-            commsock.sendto(comm[idlen:].strip().encode(), botaddr)
-        else:
-            log.warning('Invalid robot ID in <%s>' % comm)
+                log.warning('Invalid robot ID in <%s>' % comm)
 
 def logloop():
     """ Logging Receiving Loop: Reveives log messages from
@@ -188,16 +192,20 @@ def logloop():
     log.info('Logging Server Listening')
     # Main loop
     while True:
-        data, cliip = ['','']
+        data, cliip = [b'','']
         try:
             # Wait for new data package
-            data, (cliip, cliport) = sock.recvfrom(2048)
+            data, (cliip, cliport) = sock.recvfrom(4096)
+            while False: #True:
+                packet, (cliip, cliport) = sock.recvfrom(4096)
+                print(repr(packet))
+                if not packet: break
+                data += packet
             logobj = pickle.loads(data[4:])
             logrec = logging.makeLogRecord(logobj)
             logging.getLogger(logrec.name).handle(logrec)
         except BaseException as e:
             log.warn('Error receiving log from %s, message %s' % (cliip, data))
-            raise e # in case there's a bug
 
 ### Preparation
 # Load configuration

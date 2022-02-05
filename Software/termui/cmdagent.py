@@ -15,7 +15,9 @@ Possible commands are:
     cmd exit - exits the command agent
     cmd quitele - sends shutdown command to GBOT_TELEMETRY program
 The < > brackets indicate text needed to be entered and are not
-necessary."""
+necessary. It is possible to send a command to multiple bots by listing
+multiple bot IDs or IP addresses separated with "/".
+"""
 
 import queue
 import logging

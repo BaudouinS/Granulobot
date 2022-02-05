@@ -80,7 +80,7 @@ def setconfig(config = None):
                 config.pop(0)
         if len(config) < 1:
             raise RuntimeError('setconfig: No valid confiles: %s' % retmsg.strip())
-        retmsg += 'baseconf = %s' % config[0]
+        retmsg += '\nbaseconf = %s' % config[0]
         config.pop(0)
         # Get delta configs
         while len(config):

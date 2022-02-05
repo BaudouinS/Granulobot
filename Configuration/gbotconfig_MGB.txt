@@ -14,9 +14,9 @@
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
-    #telehost = '192.168.1.7' 
+    telehost = '192.168.1.7' 
     #telehost = 172.20.10.105
-    telehost = '10.150.71.216'
+    #telehost = '10.150.71.216'
     #telehost = '192.168.0.100' # .100 .255
     #telehost = '192.168.187.153'
 
@@ -37,7 +37,8 @@
     1 = $FIRMWARE_BINFILE1
     5 = $FIRMWARE_BINFILE1
 
-notes = """
+[usernotes]
+    notes = """
 
 #### Running the code ####
 
@@ -47,6 +48,8 @@ python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/g
 python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+tail -f ../data/gbotlog_202202
+tail -f ../data/gbotelemetry_2202
 
 #### Full Task List ####
 
