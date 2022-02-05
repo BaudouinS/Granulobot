@@ -6,15 +6,17 @@
     GBOT_BASEPATH = C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Granulobot
     # Environment variable where you want to put the telemetry, log and other data files
     GBOT_DATAPATH = C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Gbotdata
+    FirmwareV13=$GBOT_BASEPATH\Firmware\Granulobot_UDP_V13\.pio\build\tinypico\firmware.bin
 
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
     #telehost = '192.168.100.255' 
-    #telehost = '192.168.0.103' 
-    telehost = '192.168.1.3'
-    #telehost='172.16.1.183'
- 
+    #telehost = '192.168.0.101' 
+    telehost = '192.168.1.12'
+    #telehost = '172.16.1.183'
+    #telehost = '10.0.0.17'
+
 ### Details for the simbot simulated robot
 [simbot]
     # Telemetry Reporting Frequency (Hz)
@@ -26,6 +28,18 @@
 #    teletext = '''D=01 A=25 B=30
 #D=05 A=30 B=10'''
 
+#### Upload
+[upload]
+    1= $FirmwareV13
+    2= $FirmwareV13
+    3= $FirmwareV13
+    4= $FirmwareV13
+    5= $FirmwareV13
+    6= $FirmwareV13
+    7= $FirmwareV13
+    8= $FirmwareV13
+    9= $FirmwareV13
+    10= $FirmwareV13
 
 notes = """
 
@@ -36,6 +50,8 @@ cd C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Granulobot
 python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
 python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
 python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
+
+python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_BS.txt
 
 #### Full Task List ####
 

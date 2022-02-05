@@ -19,7 +19,7 @@ pythonpath = $GBOT_BASEPATH/Granulobot/Software
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
-    telehost = '192.168.0.100' 
+    telehost = '192.168.1.12' 
     # GBOT - port for telemetry from the robots to computer
     teleport = 6807  # looks like "GBOT"
     # port for sending commands to the robots from the computer
