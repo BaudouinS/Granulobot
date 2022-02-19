@@ -64,6 +64,13 @@
 #    teletext = '''D=01 A=25 B=30
 #D=05 A=30 B=10'''
 
+### Details for button program
+[button]
+    # Button text
+    text = 'Poke'
+    # Button command
+    cmd = 'P'
+
 ### Details for the user interface program
 [userinterface]
     # Greeting

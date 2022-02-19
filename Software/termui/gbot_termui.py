@@ -33,6 +33,7 @@ from distutils.command.config import config
 from agentparent import AgentParent
 from interparent import InterParent
 from userinterface import InterUser
+from scriptoper import ScriptOper
 from configagent import ConfigAgent
 from teleagent import TeleAgent
 from cmdagent import CmdAgent
@@ -48,17 +49,19 @@ def gbotcontrol():
     logging.getLogger('TermUI').info('Terminal User Interface: Starting UP')
     # Make interfaces and agents
     inusr = InterUser(config, 'User')
+    opscr = ScriptOper(config, 'Script')
     agconf = ConfigAgent(config, 'Conf')
     agtele = TeleAgent(config, 'Tele')
     agcmd = CmdAgent(config,'Cmd')
 
     # Register agents with interfaces
-    for agent in [agconf, agtele, agcmd]:
+    for agent in [agconf, agtele, agcmd, opscr]:
         inusr.addagent(agent)
+        opscr.addagent(agent)
 
     # Run items as threads (as daemons such that they shut down on exit)
     threads = {}
-    for item in [agconf, agtele, agcmd, inusr]:
+    for item in [agconf, agtele, agcmd, opscr, inusr]:
         thread = threading.Thread(target = item)
         thread.daemon = True
         thread.start()

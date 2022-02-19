@@ -48,6 +48,7 @@ python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/g
 python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+python Software/gbot_button.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 tail -f ../data/gbotlog_202202
 tail -f ../data/gbotelemetry_2202
 
@@ -56,27 +57,30 @@ tail -f ../data/gbotelemetry_2202
 * Test:
   * If open port do I receive both direct messages and broadcast over this address?
   * i.e. Try to send message to broadcast to server.
-* Firmwareupload
-  ./ Make basic file: header with usage manual and stuffs (requires config)
-  ./ Copy upload script to support (or gbotlib?)
-  ./ Define config file parameters
-  * Programming:
-    ./ Setup logging (output and gbot telemetry logfile)
-    ./ Program find datalog file
-    ./ Load json of each robot
-    ./ Send file to each robot
-  * Testing
-    * Make test log file for 2 robots
-    * Test locally with 2 robots (2 different programs)
-    * Test while gbot_telemetry is running and confirm receipt of logs
+* Scriptagent
+  * Goal: Make script agent such that scripts can be called.
+  * Idea: all normal commands except wait(s)
+  * Idea: either full script path or have an internal variable scriptpath
+          use script path D:/myfiles/myscripts to set
+  * Idea: other command is script scriptname.txt or script /home/me/myfiles/script.txt
+  * Questions: Why does this have to be an agent?
+    Answer: So it doesn't block any clients.
+  * Question: What if a script is still executing and a new one is sent?
+    Answer: Either stop old script or respond with error message (hint: use stop)
+  * Idea script stop / resume commands
+  * Question: where do answers from commands go?
+  ----
+  * Get operator parent (do not addagent if self is passed)
+  * Make new operator (look at watchdog)
+  * Set up scriptname command
+  * Set up running scripts (one command each loop)
+  * Set up wait (set time until to wait so still returning messages)
+  * Set up addl commands: scriptpath, stop, resume, status (what is running, last script, scriptpath)
+* Upload:
+  * Add option to upload to certain robots (1/5/7)
+  * Add detection if upload was sucessfull and if not try again
+  * Check if upload can happen at same time as reporting of data
 * Telemetry
-  # Have the computer announce it's IP to the robots (broadcast command)
-    * IDEA: add a command to the robots with it's IP then the robots send to that IP
-    * Question: how to make send ONLY to that IP or add that IP to the list? 
-      NO but IP can be broadcasting
-    * Send at startup, by request and/or regular intervals (not all the time)
-    * IDEA: restrict boradcasting IP range in router (see if faster messages)
-    * TODO: Implement telip command for the robots to receive new telemetry IP address
   * Make sure subthreads die after 1s if no data (crash with error from timeout?)
   * Logging set up for less messages in terminal (INFO in terminal but DEBUG in file)
 * Commandinterface (UDP)
@@ -91,7 +95,6 @@ tail -f ../data/gbotelemetry_2202
     * I.e. telecmd program not running, not answering
   * For telemetry agent: flexible commands commlist (ip, last entry, MAC) varlist (acc, vel, motor settings)
   * For telemetry agent: get 1 message from robot every seconds for 10s or so
-  * For command agent: Send message to all robots (maybe make this gbots_telemetry functionality)
 * Documentation
   * ICD between the programs and gbot_telemetry
   * How to write a program to run the robots (what is interface and how to use it)
@@ -99,6 +102,20 @@ tail -f ../data/gbotelemetry_2202
 * Plotting: Add program to display live data
   
 DONE:
+# Firmwareupload
+  ./ Make basic file: header with usage manual and stuffs (requires config)
+  ./ Copy upload script to support (or gbotlib?)
+  ./ Define config file parameters
+  ./ Programming:
+    ./ Setup logging (output and gbot telemetry logfile)
+    ./ Program find datalog file
+    ./ Load json of each robot
+    ./ Send file to each robot
+  ./ Testing
+    ./ Make test log file for 2 robots
+    ./ Test locally with 2 robots (2 different programs)
+    ./ Test while gbot_telemetry is running and confirm receipt of logs
+
 # Testrobot: prog that sends string NHz and listens on port to receive messages
   ./ Set up program
   ./ Get config (use library)
@@ -107,6 +124,13 @@ DONE:
   ./ Report telemetry
   ./ Check for commands
 # Telemetry
+  ./ Have the computer announce it's IP to the robots (broadcast command)
+    * IDEA: add a command to the robots with it's IP then the robots send to that IP
+    * Question: how to make send ONLY to that IP or add that IP to the list? 
+      NO but IP can be broadcasting
+    * Send at startup, by request and/or regular intervals (not all the time)
+    * IDEA: restrict boradcasting IP range in router (see if faster messages)
+    * TODO: Implement telip command for the robots to receive new telemetry IP address
   ./ Basic loop setup and memory for messages: Dict, open file
   ./ Set up configuration ports and stuffs
   ./ Thread function to read from robots
