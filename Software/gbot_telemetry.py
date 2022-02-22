@@ -226,7 +226,7 @@ log.debug('Loaded Configuration = %s' % repr(config))
 telefname = config['telemetry']['telefile']
 telefname = os.path.expandvars(telefname)
 telefname = datetime.now().strftime(telefname)
-telefile = open(telefname, 'wt')
+telefile = open(telefname, 'at')
 # Setup  telemetry thread to get data from robots
 telethr = threading.Thread(target = teleloop, daemon = True)
 telethr.start()
