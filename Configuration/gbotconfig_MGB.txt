@@ -14,8 +14,9 @@
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
-    telehost = '192.168.1.7' 
+    #telehost = '192.168.1.7' 
     #telehost = 172.20.10.105
+    telehost = 10.223.5.68
     #telehost = '10.150.71.216'
     #telehost = '192.168.0.100' # .100 .255
     #telehost = '192.168.187.153'
@@ -59,27 +60,36 @@ tail -f ../data/gbotelemetry_2202
   * i.e. Try to send message to broadcast to server.
 * Scriptagent
   * Goal: Make script agent such that scripts can be called.
-  * Idea: all normal commands except wait(s)
-  * Idea: either full script path or have an internal variable scriptpath
+  ./ Idea: all normal commands except wait(s)
+  ./ Idea: either full script path or have an internal variable scriptpath
           use script path D:/myfiles/myscripts to set
-  * Idea: other command is script scriptname.txt or script /home/me/myfiles/script.txt
-  * Questions: Why does this have to be an agent?
+  ./ Idea: other command is script scriptname.txt or script /home/me/myfiles/script.txt
+  ./ Questions: Why does this have to be an agent?
     Answer: So it doesn't block any clients.
-  * Question: What if a script is still executing and a new one is sent?
+  ./ Question: What if a script is still executing and a new one is sent?
     Answer: Either stop old script or respond with error message (hint: use stop)
   * Idea script stop / resume commands
   * Question: where do answers from commands go?
+  * Idea: if command comes from other interface, old interface gets notified
   ----
-  * Get operator parent (do not addagent if self is passed)
-  * Make new operator (look at watchdog)
+  ./ Get operator parent (do not addagent if self is passed)
+  ./ Make new operator (look at watchdog)
   * Set up scriptname command
   * Set up running scripts (one command each loop)
   * Set up wait (set time until to wait so still returning messages)
+  * Set up return responses
   * Set up addl commands: scriptpath, stop, resume, status (what is running, last script, scriptpath)
+  * Set up responding to current / new respqueue:
+    * Status goes back to sender
+    * All command responses go to last script caller (respscript?)
+    * stop, resume, script.txt go change respscript and go to new respscript
 * Upload:
   * Add option to upload to certain robots (1/5/7)
   * Add detection if upload was sucessfull and if not try again
   * Check if upload can happen at same time as reporting of data
+* Button:
+  * Add message with dissapear timer, add update message
+  * Put send command in try - except
 * Telemetry
   * Make sure subthreads die after 1s if no data (crash with error from timeout?)
   * Logging set up for less messages in terminal (INFO in terminal but DEBUG in file)

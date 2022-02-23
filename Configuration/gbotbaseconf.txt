@@ -77,6 +77,8 @@
     greeting = Welcome to Granular Robots user interface: type 'help' for help
     # Helpfile location
     helpfile = $GBOT_BASEPATH/Software/termui/uihelp.txt
+    # Script folder for script operator
+    scriptfolder = $GBOT_BASEPATH/Scripts
     
 ### Information for the uploading program.
 [upload]

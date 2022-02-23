@@ -1,0 +1,7 @@
+# Test Script
+cmd all P
+wait 5 # just wait
+conf button
+wait 20
+cmd all P
+alpha beta # to generate error

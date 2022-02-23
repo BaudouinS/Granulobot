@@ -26,4 +26,4 @@ btn = Button(master, text = config['button']['text'], bd = '10',
 btn['font'] = lgfont
 btn.pack(fill = BOTH, expand = True)
 # Run mainloop
-mainloop()
+master.mainloop()

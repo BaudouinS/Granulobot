@@ -26,7 +26,7 @@ class AgentParent():
         """ Constructor: Set up variables
         """
         self.name = name
-        self.comqueue = queue.Queue() # Queue object for querries
+        self.comqueue = queue.Queue() # Queue object for queries
         self.config = config # configuration
         self.log = logging.getLogger('Agent.'+self.name)
         self.exit = False # Indicates that loop should exit
