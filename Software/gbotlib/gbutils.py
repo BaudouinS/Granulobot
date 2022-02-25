@@ -6,6 +6,7 @@
 # Imports
 import os
 import sys
+import time
 import socket
 import json
 from datetime import datetime
@@ -125,11 +126,20 @@ def getelemetry(config = None, format = 'jsonlist', timeout = None):
     # Set timeout from config
     if timeout == None:
         timeout = float(config['telemetry']['gbotimeout'])
-    # Get the telemetry data
+    # Open socket, send command
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('127.0.0.1',int(config['sockets']['telesock'])))
     s.sendall('botdata'.encode())
+    # Receive the data
     data=s.recv(2048).decode()
+    s.setblocking(0) # Set here such that first recv has data available
+    while 1:
+        # Receive loop
+        dat = s.recv(2048).decode()
+        if not len(dat):
+            break
+        data+=dat
+        print('**'+dat)
     s.close()
     # Return the data
     if 'raw' in format.lower():
