@@ -133,6 +133,7 @@ def getelemetry(config = None, format = 'jsonlist', timeout = None):
     # Receive the data
     data=s.recv(2048).decode()
     s.setblocking(0) # Set here such that first recv has data available
+    time.sleep(0.001) # To avoid BlockingIOError
     while 1:
         # Receive loop
         dat = s.recv(2048).decode()
