@@ -14,8 +14,12 @@
     The program then uses the most recent datalog file to get the IP
     addresses for the robots.
     
+    It is possible to specify which robots to upload to by listing
+    the robot ids of the various robots.  If no IDs are specified
+    the firmware is loaded to all robots.
+    
     Usage:
-        python gbot_uplaod.py configfile.txt
+        python gbot_uplaod.py configfile.txt id1 id2 id3
 
 """
 
@@ -51,15 +55,30 @@ if not telefname:
     log.error(msg)
     raise(RuntimeError(msg))
 log.info('Found telemetry file %s' % telefname)
-# Get robot entries from telemetry file
+### Get robot entries from telemetry file
+# Read all lines
 telines = [l.strip() for l in open(telefname) if len(l) > 5]
+# Add json of each robot into botele dictionary
+# (multiple entries of same robot are overwritten to keep latest)
 botele = {}
-for l in telines[-10:]:
+for l in telines:
     # Get json
     rjson = json.loads(l[l.index('{'):])
     botele[rjson[config['telemetry']['idparam']]]=rjson
 for r in botele:
     log.debug('Bot %s: %s' % (repr(r), repr(botele[r])))
+### Get select robot names from argv
+botelesel = {}
+for r in botele:
+    if repr(r) in sys.argv:
+        botelesel[r] = botele[r]
+if len(botelesel):
+    selbots = ' '.join([repr(r) for r in botelesel])
+    log.debug(f'Selected {len(botelesel)} robots based on command arguments: ' +
+              selbots)
+    botele = botelesel
+else:
+    log.debug('No robots in command arguments, uploading to all')
 ### Upload to the robots
 for r in botele:
     # Get file (run expandvars once here, once later)

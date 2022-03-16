@@ -14,8 +14,8 @@
 ### Sockets information: How programs communicate with each other
 [sockets]
     # host for incoming telemetry to the robots
-    telehost = '192.168.1.7' 
-    #telehost = 172.20.10.105
+    #telehost = '192.168.1.7' 
+    telehost = 172.20.0.21
     #telehost = 10.223.5.68
     #telehost = '10.150.71.216'
     #telehost = '192.168.0.100' # .100 .255
@@ -27,6 +27,10 @@
     telefreq = 20
     # Telemetry Text: Multi-line string, the bot cycles through the lines
     teletext = '''
+{"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
+{"A":5,"t":97799,"d":2,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
+{"A":5,"t":97799,"d":5,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}'''
+    teletextlong = '''
 {"A":5,"t":97768,"d":1,"x":0.052642,"y":-0.095713,"z":9.818948,"u":0.001222,"v":0.00733,"w":-0.006109}
 {"A":5,"t":97799,"d":2,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
 {"A":5,"t":97799,"d":3,"x":0.052699,"y":-0.0957099,"z":9.818999,"u":0.001299,"v":0.00799,"w":-0.006199}
@@ -105,7 +109,9 @@
 [upload]
     # Which program to use for each robot (uses config[telemetry][idparam] to id robots)
     1 = $FIRMWARE_BINFILE1
-    5 = $FIRMWARE_BINFILE1
+    2 = $FIRMWARE_BINFILE2
+    5 = $FIRMWARE_BINFILE3
+    cmd = echo %s %s
 
 [usernotes]
     notes = """
@@ -113,8 +119,9 @@
 #### Running the code ####
 
 
-python Software/gbot_telemetry.py export PYTHONPATH=/Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
-cd instruments/electro/2021granulobots/GranulobotConfiguration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
+export PYTHONPATH=/Users/berthoud/instruments/electro/2021granulobots/Granulobot/Software
+cd instruments/electro/2021granulobots/Granulobot
+python Software/gbot_telemetry.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python TestCode/SimBot/simbot.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/termui/gbot_termui.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
 python Software/gbot_upload.py Configuration/gbotbaseconf.txt Configuration/gbotconfig_MGB.txt
@@ -158,7 +165,7 @@ tail -f ../data/gbotelemetry_2202
   * Check if upload can happen at same time as reporting of data
 * Button:
   * Add message with dissapear timer, add update message
-  * Put send command in try - except
+  * Put send command in try - except if it doesn't work, try to send messages yourself
 * Telemetry
   * Make sure subthreads die after 1s if no data (crash with error from timeout?)
   * Logging set up for less messages in terminal (INFO in terminal but DEBUG in file)
