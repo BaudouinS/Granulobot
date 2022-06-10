@@ -1,0 +1,26 @@
+#step 3 : deform to line
+
+cmd all HandInit /5/6/8/;
+wait 1
+cmd all HandRoll5/100;
+
+
+#cmd 1 MS-7P12000;
+#cmd 2 MS7P12000;
+#cmd 3 MS-7P12000;
+#cmd 4 MS7P12000;
+#cmd 5 MS-7P12000;
+#wait 2 
+
+
+#cmd 1 MS-7P5000;
+#cmd 2 MS7P15000;
+#cmd 3 MS-7P15000;
+#cmd 4 MS7P5000;
+#cmd 5 MS-7P5000;
+#cmd 6 MS7P15000;
+#cmd 7 MS-7P15000;
+#cmd 8 MS7P5000;
+#cmd 9 MS-7P5000;
+#cmd 10 MS7P5000;
+#wait 2 

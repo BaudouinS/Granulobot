@@ -1,0 +1,27 @@
+ 
+#step 2 : move trio aggregate
+
+#cmd 3 MS-7P2000;
+#cmd 10 MS-7P2000;
+#wait 1
+
+#cmd 1 MS-7P12000;
+#cmd 2 MS7P12000;
+#cmd 3 MS-7P12000;
+#wait 2 
+
+#cmd 8 MS7P12000;
+#cmd 9 MS-7P12000;
+#cmd 10 MS7P12000;
+#wait 1
+
+#cmd 7 MS-7P3000; 
+#cmd 8 MS-7P3000; 
+#cmd 3 MS-7P2000;
+#cmd 4 MS-7P2000;
+
+cmd all HandInit /1/2/3/;
+wait 1
+cmd all HandRoll1/-100;
+
+

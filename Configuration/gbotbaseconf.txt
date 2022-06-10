@@ -67,9 +67,9 @@
 ### Details for button program
 [button]
     # Button text
-    text = 'Poke'
+    text = 'Stop'
     # Button command
-    cmd = 'P'
+    cmd = 'HandStop;'
 
 ### Details for the user interface program
 [userinterface]

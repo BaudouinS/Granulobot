@@ -1,0 +1,38 @@
+# Test Script
+cmd all DiffPWM255,235;
+wait 3 
+cmd all DiffPWM235,215;
+wait 3 
+cmd all DiffPWM215,195;
+wait 3 
+cmd all DiffPWM195,175;
+wait 3 
+cmd all DiffPWM175,155;
+wait 3 
+cmd all DiffPWM155,135;
+wait 3 
+cmd all DiffPWM135,115;
+wait 3 
+cmd all DiffPWM115,95;
+wait 3 
+cmd all DiffPWM95,75;
+wait 3 
+cmd all DiffPWM75,55;
+wait 3 
+cmd all DiffPWM55,35;
+wait 3 
+cmd all DiffPWM35,15;
+wait 3 
+cmd all DiffPWM15,0;
+wait 3 
+cmd all DiffPWM255,205;
+wait 3 
+cmd all DiffPWM200,150;
+wait 3 
+cmd all DiffPWM150,100;
+wait 3 
+cmd all DiffPWM100,50;
+wait 3 
+cmd all DiffPWM50,0;
+wait 3 
+cmd all HandStop;

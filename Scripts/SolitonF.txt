@@ -1,0 +1,3 @@
+cmd all HandInit /1/2/3/4/5/6/7/8/;
+wait 1
+cmd all HandF1/P110Y40SG800;

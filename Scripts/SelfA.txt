@@ -1,0 +1,36 @@
+# Self Assembly
+cmd all Po;
+wait 2 
+
+#step 1: create aggregate
+cmd 1 MS-7P5000;
+cmd 8 MS-7P5000;
+cmd 4 MS-7P5000;
+cmd 6 MS7P5000;
+cmd 7 MS7P10000;
+wait 2 
+
+cmd 2 MS-7P1000;
+cmd 3 MS7P5000;
+cmd 9 MS-7P1000;
+cmd 10 MS7P5000;
+wait 2
+
+
+#step 2 : move trio aggregate
+cmd 1 MS-7P1000;
+cmd 2 MS7P1000
+cmd 8 MS7P1000;
+cmd 9 MS-7P1000
+wait 2
+
+cmd 1 MS-7P10000;
+cmd 2 MS7P10000
+cmd 3 MS-7P10000;
+wait 2 
+
+cmd 8 MS7P10000;
+cmd 9 MS-7P10000
+cmd 10 MS7P10000;
+wait 2 
+

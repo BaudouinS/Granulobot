@@ -1,0 +1,7 @@
+cmd 3 MS7P300;
+cmd 2 MS-7P300;
+cmd 1 MS7P300;
+cmd 10 MS-7P300;
+cmd 9 MS7P300;
+wait 1
+

@@ -1,0 +1,30 @@
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+cmd all IP192.168.1.2
+wait 1
+cmd all Po;
+tele all

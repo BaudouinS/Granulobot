@@ -1,0 +1,24 @@
+# Line to ring
+cmd all Po;
+wait 2
+
+#cmd 1 Po;
+#cmd 9 Po;
+cmd 1 MS-7P3300;#2958;
+cmd 9 MS-7P3300;#2958;
+wait 2
+
+cmd 2 MS-7P2958;
+cmd 8 MS-7P2958;
+cmd 1 MS7P2958;
+cmd 9 MS7P2958;
+wait 2
+
+cmd 3 MS-7P2958;
+cmd 7 MS-7P2958;
+cmd 2 MS7P2958;
+cmd 8 MS7P2958;
+cmd 1 MS-7P3300;
+cmd 9 MS-7P3300;
+wait 2
+

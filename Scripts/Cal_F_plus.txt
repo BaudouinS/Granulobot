@@ -1,0 +1,106 @@
+# Test Script
+cmd all SF0;
+wait 1 # just wait
+cmd all SF5;
+wait 1
+cmd all SF10;
+wait 1 
+cmd all SF15;
+wait 1
+cmd all SF20;
+wait 1 
+cmd all SF25;
+wait 1
+cmd all SF30;
+wait 1 
+cmd all SF35;
+wait 1 
+cmd all SF40;
+wait 1 
+cmd all SF45;
+wait 1
+cmd all SF50;
+wait 1 
+cmd all SF55;
+wait 1 
+cmd all SF60;
+wait 1 
+cmd all SF65;
+wait 1
+cmd all SF70;
+wait 1 
+cmd all SF75;
+wait 1 
+cmd all SF80;
+wait 1 
+cmd all SF85;
+wait 1
+cmd all SF90;
+wait 1 
+cmd all SF95;
+wait 1  
+cmd all SF100;
+wait 1 
+cmd all SF105;
+wait 1
+cmd all SF110;
+wait 1 
+cmd all SF115;
+wait 1
+cmd all SF120;
+wait 1 
+cmd all SF125;
+wait 1
+cmd all SF130;
+wait 1 
+cmd all SF135;
+wait 1 
+cmd all SF140;
+wait 1 
+cmd all SF145;
+wait 1
+cmd all SF150;
+wait 1 
+cmd all SF155;
+wait 1 
+cmd all SF160;
+wait 1 
+cmd all SF165;
+wait 1
+cmd all SF170;
+wait 1 
+cmd all SF175;
+wait 1 
+cmd all SF180;
+wait 1 
+cmd all SF185;
+wait 1
+cmd all SF190;
+wait 1 
+cmd all SF195;
+wait 1 
+cmd all SF200;
+wait 1 
+cmd all SF205;
+wait 1
+cmd all SF210;
+wait 1 
+cmd all SF215;
+wait 1
+cmd all SF220;
+wait 1 
+cmd all SF225;
+wait 1
+cmd all SF230;
+wait 1 
+cmd all SF235;
+wait 1 
+cmd all SF240;
+wait 1 
+cmd all SF245;
+wait 1
+cmd all SF250;
+wait 1 
+cmd all SF255;
+wait 1 
+cmd all HandStop;

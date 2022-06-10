@@ -1,0 +1,5 @@
+#Script for te shifting with video
+
+cmd all Po;
+wait 10 
+cmd all DRF40;

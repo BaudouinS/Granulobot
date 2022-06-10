@@ -1,0 +1,106 @@
+# Test Script
+cmd all SFS0;
+wait 1 # just wait
+cmd all SFS5;
+wait 1
+cmd all SFS10;
+wait 1 
+cmd all SFS15;
+wait 1
+cmd all SFS20;
+wait 1 
+cmd all SFS25;
+wait 1
+cmd all SFS30;
+wait 1 
+cmd all SFS35;
+wait 1 
+cmd all SFS40;
+wait 1 
+cmd all SFS45;
+wait 1
+cmd all SFS50;
+wait 1 
+cmd all SFS55;
+wait 1 
+cmd all SFS60;
+wait 1 
+cmd all SFS65;
+wait 1
+cmd all SFS70;
+wait 1 
+cmd all SFS75;
+wait 1 
+cmd all SFS80;
+wait 1 
+cmd all SFS85;
+wait 1
+cmd all SFS90;
+wait 1 
+cmd all SFS95;
+wait 1  
+cmd all SFS100;
+wait 1 
+cmd all SFS105;
+wait 1
+cmd all SFS110;
+wait 1 
+cmd all SFS115;
+wait 1
+cmd all SFS120;
+wait 1 
+cmd all SFS125;
+wait 1
+cmd all SFS130;
+wait 1 
+cmd all SFS135;
+wait 1 
+cmd all SFS140;
+wait 1 
+cmd all SFS145;
+wait 1
+cmd all SFS150;
+wait 1 
+cmd all SFS155;
+wait 1 
+cmd all SFS160;
+wait 1 
+cmd all SFS165;
+wait 1
+cmd all SFS170;
+wait 1 
+cmd all SFS175;
+wait 1 
+cmd all SFS180;
+wait 1 
+cmd all SFS185;
+wait 1
+cmd all SFS190;
+wait 1 
+cmd all SFS195;
+wait 1 
+cmd all SFS200;
+wait 1 
+cmd all SFS205;
+wait 1
+cmd all SFS210;
+wait 1 
+cmd all SFS215;
+wait 1
+cmd all SFS220;
+wait 1 
+cmd all SFS225;
+wait 1
+cmd all SFS230;
+wait 1 
+cmd all SFS235;
+wait 1 
+cmd all SFS240;
+wait 1 
+cmd all SFS245;
+wait 1
+cmd all SFS250;
+wait 1 
+cmd all SFS255;
+wait 1 
+cmd all HandStop;

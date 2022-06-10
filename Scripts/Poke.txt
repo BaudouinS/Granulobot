@@ -1,7 +1,5 @@
 # Test Script
 cmd all Po;
 wait 5 # just wait
-conf button
-wait 20
 cmd all Po;
-alpha beta # to generate error
+#alpha beta # to generate error

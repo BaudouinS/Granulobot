@@ -1,0 +1,6 @@
+cmd 3 MS-7P1000;
+#cmd 7 MS-7P2958;
+cmd 2 MS7P1000;
+#cmd 8 MS7P1000;
+cmd 1 MS-7P1000;
+#cmd 9 MS-7P3300;

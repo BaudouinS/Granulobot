@@ -16,7 +16,7 @@ const char * pwd = "strongmoon546";
 //const char * udpAddress = "192.168.1.3";//netgear router broadcast
 //char * udpAddress = "192.168.1.255";//netgear router broadcast
 char udpAddress[50];
-char * udpAddress0="192.168.1.255";// init with broadcast address
+char * udpAddress0 = "192.168.1.255";// init with broadcast address
 
 //UDP port
 const int localPort = 6808;//4210;

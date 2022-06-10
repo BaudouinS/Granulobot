@@ -1,0 +1,30 @@
+cmd 1 MS-7P3000;
+cmd 9 MS-7P3000;
+
+wait 1
+
+cmd 2 MS-7P1500;
+cmd 8 MS-7P1500;
+
+wait 1
+
+cmd 1 MS7P1500;
+cmd 9 MS7P1500;
+
+wait 1
+
+cmd 3 MS-7P900;
+cmd 7 MS-7P900;
+
+wait 1
+
+cmd 1 MS7P1200;
+cmd 9 MS7P1200;
+
+wait 1
+
+cmd 1 MS7P1200;
+#cmd 8 MS7P1200;
+
+
+

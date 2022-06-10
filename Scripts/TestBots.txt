@@ -1,0 +1,74 @@
+# Line to ring
+cmd all Po;
+wait 5 
+
+cmd 1 Po;
+cmd 1 Stiff;
+cmd 1 A700;
+wait 3 
+cmd 1 A0; 
+wait 5 
+
+cmd 2 Po;
+cmd 2 Stiff;
+cmd 2 A700;
+wait 3 
+cmd 2 A0; 
+wait 5 
+
+cmd 3 Po;
+cmd 3 Stiff;
+cmd 3 A700;
+wait 3 
+cmd 3 A0; 
+wait 5 
+
+cmd 4 Po;
+cmd 4 Stiff;
+cmd 4 A700;
+wait 3 
+cmd 4 A0; 
+wait 5 
+
+cmd 5 Po;
+cmd 5 Stiff;
+cmd 5 A700;
+wait 3 
+cmd 5 A0; 
+wait 5 
+
+cmd 6 Po;
+cmd 6 Stiff;
+cmd 6 A700;
+wait 3 
+cmd 6 A0; 
+wait 5 
+
+cmd 7 Po;
+cmd 7 Stiff;
+cmd 7 A700;
+wait 3 
+cmd 7 A0; 
+wait 5 
+
+cmd 8 Po;
+cmd 8 Stiff;
+cmd 8 A700;
+wait 3 
+cmd 8 A0; 
+wait 5 
+
+cmd 9 Po;
+cmd 9 Stiff;
+cmd 9 A700;
+wait 3 
+cmd 9 A0; 
+wait 5 
+
+
+cmd 10 Po;
+cmd 10 Stiff;
+cmd 10 A700;
+wait 3 
+cmd 10 A0; 
+wait 5 

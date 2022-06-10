@@ -1,0 +1,106 @@
+# Test Script
+cmd all Br0;
+wait 2 
+cmd all Br5;
+wait 2
+cmd all Br10;
+wait 2 
+cmd all Br15;
+wait 2
+cmd all Br20;
+wait 2 
+cmd all Br25;
+wait 2
+cmd all Br30;
+wait 2 
+cmd all Br35;
+wait 2 
+cmd all Br40;
+wait 2 
+cmd all Br45;
+wait 2
+cmd all Br50;
+wait 2 
+cmd all Br55;
+wait 2 
+cmd all Br60;
+wait 2 
+cmd all Br65;
+wait 2
+cmd all Br70;
+wait 2 
+cmd all Br75;
+wait 2 
+cmd all Br80;
+wait 2 
+cmd all Br85;
+wait 2
+cmd all Br90;
+wait 2 
+cmd all Br95;
+wait 2  
+cmd all Br100;
+wait 2 
+cmd all Br105;
+wait 2
+cmd all Br110;
+wait 2 
+cmd all Br115;
+wait 2
+cmd all Br120;
+wait 2 
+cmd all Br125;
+wait 2
+cmd all Br130;
+wait 2 
+cmd all Br135;
+wait 2 
+cmd all Br140;
+wait 2 
+cmd all Br145;
+wait 2
+cmd all Br150;
+wait 2 
+cmd all Br155;
+wait 2 
+cmd all Br160;
+wait 2 
+cmd all Br165;
+wait 2
+cmd all Br170;
+wait 2 
+cmd all Br175;
+wait 2 
+cmd all Br180;
+wait 2 
+cmd all Br185;
+wait 2
+cmd all Br190;
+wait 2 
+cmd all Br195;
+wait 2 
+cmd all Br200;
+wait 2 
+cmd all Br205;
+wait 2
+cmd all Br210;
+wait 2 
+cmd all Br215;
+wait 2
+cmd all Br220;
+wait 2 
+cmd all Br225;
+wait 2
+cmd all Br230;
+wait 2 
+cmd all Br235;
+wait 2 
+cmd all Br240;
+wait 2 
+cmd all Br245;
+wait 2
+cmd all Br250;
+wait 2 
+cmd all Br255;
+wait 2 
+cmd all HandStop;

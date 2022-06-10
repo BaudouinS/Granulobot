@@ -30,4 +30,4 @@ print(teleraw)
 # Send a poke command to all robots
 # Details on sending commands to the robots are described in the
 # help section of the command agent of gbut_termui.
-gbutils.sendcommand(config, 'all p')
+gbutils.sendcommand(config, 'all Po')
