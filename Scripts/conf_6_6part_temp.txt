@@ -1,0 +1,7 @@
+# Test Script
+cmd 2 A2702;    
+cmd 3 A2693;
+cmd 9 A3304;
+cmd 8 A2769;
+cmd 7 A3247;
+cmd 14 A1950;

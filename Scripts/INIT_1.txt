@@ -1,0 +1,54 @@
+# Test Script
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all IP192.168.1.2;
+wait 1
+cmd all Po;
+wait 1
+tele all
+wait 5
+cmd all PIDP10I0D0;
+wait 1
+cmd all PIDSP10I0D0;
+wait 1
+cmd all A2274;
+wait 5
+cmd all Soft;

@@ -1,0 +1,70 @@
+# Test Script
+cmd all SFS0;
+wait 2 # just wait
+cmd all SFS1;
+wait 1
+cmd all SFS2;
+wait 1
+cmd all SFS3;
+wait 1
+cmd all SFS4;
+wait 1
+cmd all SFS5;
+wait 1
+cmd all SFS10;
+wait 1 
+cmd all SFS12;
+wait 1
+cmd all SFS15;
+wait 1
+cmd all SFS20;
+wait 1 
+cmd all SFS25;
+wait 1
+cmd all SFS30;
+wait 1 
+cmd all SFS35;
+wait 1 
+cmd all SFS40;
+wait 1 
+cmd all SFS45;
+wait 1
+cmd all SFS50;
+wait 1 
+cmd all SFS55;
+wait 1 
+cmd all SFS60;
+wait 1 
+cmd all SFS65;
+wait 1
+cmd all SFS70;
+wait 1 
+cmd all SFS75;
+wait 1 
+cmd all SFS80;
+wait 1 
+cmd all SFS85;
+wait 1
+cmd all SFS90;
+wait 1 
+cmd all SFS95;
+wait 1  
+cmd all SFS100;
+wait 1 
+cmd all SFS105;
+wait 1
+cmd all SFS110;
+wait 1 
+cmd all SFS115;
+wait 1
+cmd all SFS120;
+wait 1 
+cmd all SFS125;
+wait 1
+cmd all SFS130;
+wait 1 
+cmd all SFS200;
+wait 1 
+cmd all SFS255;
+wait 1 
+cmd all HandStop;

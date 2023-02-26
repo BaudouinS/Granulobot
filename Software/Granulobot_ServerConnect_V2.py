@@ -23,14 +23,14 @@ import json
 import numpy as np
 
 #localIP     = "10.0.0.3" #local wifi 
-localIP     = "192.168.0.100"
-localPort   = 9000
+localIP     = "192.168.1.3"#"192.168.0.100"
+localPort   = 6807#9000
 #bufferSize  = 1024
 bufferSize  = 1024
 
 msgFromServer       = "Hello UDP Client"
 #bytesToSend         = str.encode(msgFromServer)
-broadcastIP           = "192.168.0.255"
+broadcastIP           = "192.168.1.255"#"192.168.0.255"
 # Create a datagram socket
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 

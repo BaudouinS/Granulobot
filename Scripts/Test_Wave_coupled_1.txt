@@ -1,0 +1,15 @@
+# Test Script
+cmd all UAGU0.4A1.2G0.6;
+wait 1 
+cmd 4 UAGU0.4A1.2G1.2;
+wait 1 
+cmd 6 UAGU0.4A1.2G1.2;
+wait 1 
+cmd 8 UAGU0.4A1.2G1.2;
+wait 1 
+cmd 10 UAGU0.4A1.2G1.2;
+wait 1
+cmd all Po;
+wait 1
+cmd all GF;
+#cmd all HandStop;

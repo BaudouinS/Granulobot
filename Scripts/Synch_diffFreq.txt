@@ -1,0 +1,15 @@
+# Test Script
+cmd all Po;
+wait 2
+cmd all UAGU0.0A0.0G0.0;
+cmd all GF;
+cmd 2 UAGU2.0A0.9G1.0;
+cmd 3 UAGU2.0A0.9G0.9;
+cmd 4 UAGU2.0A0.9G1.1;
+cmd 5 UAGU2.0A0.9G0.8;
+cmd 7 UAGU2.0A0.9G1.0;
+cmd 8 UAGU2.0A0.9G0.9;
+cmd 10 UAGU2.0A0.9G1.0;
+cmd 11 UAGU2.0A0.9G0.8;
+cmd 13 UAGU2.0A0.9G0.9;
+cmd 14 UAGU2.0A0.9G1.0;

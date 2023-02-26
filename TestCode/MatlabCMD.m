@@ -1,0 +1,200 @@
+
+clear all
+close all
+
+% local_WiFi_IP='192.168.1.2'
+local_WiFi_IP='192.168.0.100'
+d=10;
+
+%%%%%%%%%%%%get real time telemetry file
+data_telemetry_path='C:\Users\bsain\Dropbox\Physique\Blob-JAMoEBA\Gbotdata'
+%data_telemetry_path=path;
+files=dir(data_telemetry_path);
+char_to_detect="gbotelemetry_";
+k=0;
+for i= 1:length(files)
+  if contains(files(i).name, char_to_detect)
+      k=k+1;
+      indexFile(k)=i;
+  end
+end
+realtime_file=files(indexFile(k)).name
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%read last line of telemetry
+        fid = fopen(realtime_file, 'r');   %NOT 'rt' !
+        Nprobe = 5;
+        lsizes = zeros(1,Nprobe);
+        prevline = '';
+        for K = 1 : Nprobe
+          thisline = fgets(fid);     %not fgetl()
+          if ~ischar(thisline); break; end   %already reached end of file
+          lsizes(K) = size(thisline, 2);
+          if ~isempty(deblank(thisline))
+            prevline = thisline;
+          end
+        end
+        if feof(fid)
+          lastline = prevline;    %we already read it in
+        else
+          offset_estimate = max(lsizes) * 2;
+          fseek(fid, -offset_estimate, 'eof');
+          prevline = [];
+          linesread = 0;
+          while true
+            thisline = fgets(fid);
+            if ~ischar(thisline); break; end   %we reached end of file
+            if ~isempty(deblank(thisline))
+              prevline = thisline;
+              linesread = linesread + 1;
+            end
+          end
+          if linesread < 2
+            fprintf('last non-empty line much longer than expected, code gives up');
+            fclose(fid);
+            error('last line too long');
+          end
+          lastline = prevline;
+        end
+        lastline = regexprep(lastline, '[\r\n]+$', '');
+        fclose('all');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%initialize with the local IP address instead of broadcast
+Data_temp=convertStringsToChars(lastline);
+Data_js = jsondecode(Data_temp(17:end));  
+
+while ~strcmp(Data_js.ipo,local_WiFi_IP)
+        
+    
+    Data_temp=convertStringsToChars(lastline);
+    Data_js = jsondecode(Data_temp(17:end));  
+
+    fid = fopen(realtime_file, 'r');   %NOT 'rt' !
+    Nprobe = 5;
+    lsizes = zeros(1,Nprobe);
+    prevline = '';
+    for K = 1 : Nprobe
+      thisline = fgets(fid);     %not fgetl()
+      if ~ischar(thisline); break; end   %already reached end of file
+      lsizes(K) = size(thisline, 2);
+      if ~isempty(deblank(thisline))
+        prevline = thisline;
+      end
+    end
+    if feof(fid)
+      lastline = prevline;    %we already read it in
+    else
+      offset_estimate = max(lsizes) * 2;
+      fseek(fid, -offset_estimate, 'eof');
+      prevline = [];
+      linesread = 0;
+      while true
+        thisline = fgets(fid);
+        if ~ischar(thisline); break; end   %we reached end of file
+        if ~isempty(deblank(thisline))
+          prevline = thisline;
+          linesread = linesread + 1;
+        end
+      end
+      if linesread < 2
+        fprintf('last non-empty line much longer than expected, code gives up');
+        fclose(fid);
+        error('last line too long');
+      end
+      lastline = prevline;
+    end
+    lastline = regexprep(lastline, '[\r\n]+$', '');
+    fclose('all');
+
+    client = tcpclient("127.0.0.1",6809)
+    %data=[num2str(d) ' IP192.168.1.2']
+    data=['all IP' local_WiFi_IP ';']
+
+    write(client,data)
+    clear client
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%initialize with the right PID
+client = tcpclient("127.0.0.1",6809)
+%data="3 PIDP400I1D3000;"
+data=[num2str(d) ' PIDP10I0D0;']
+write(client,data)
+clear client
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+if ~isempty(lastline)          
+    Data_temp=convertStringsToChars(lastline);
+    Data_js = jsondecode(Data_temp(17:end));    
+    pos= Data_js.A%encoder    
+else 
+    pos=0
+end
+
+tour=12*379;
+PWM=0;
+tstart=tic;
+while true 
+
+    if toc(tstart)>0.1
+        %disp("send data");
+        %pos=pos+100;
+        PWM=PWM+5;
+%         if pos>tour
+        if PWM>100
+            PWM=0;
+            %pos=0;
+        end
+
+        client = tcpclient("127.0.0.1",6809);
+        data=[num2str(d) ' SFS' num2str(PWM) ';'];
+%         data=['3 A' num2str(pos) ';'];
+        write(client,data);
+        clear client
+        tstart=tic;
+    end
+
+end
+
+client = tcpclient("127.0.0.1",6809)
+data=[num2str(d) ' SFS0;']
+write(client,data)
+clear client
+
+
+tstart=tic;
+while true 
+
+    if toc(tstart)<10
+      
+        client = tcpclient("127.0.0.1",6809);
+        data=[num2str(d) ' SFS20;'];
+%         data=['3 A' num2str(pos) ';'];
+        write(client,data);
+        clear client
+       
+    else
+        toc(tstart)
+        client = tcpclient("127.0.0.1",6809);
+        data=[num2str(d) ' SFS0;'];
+%         data=['3 A' num2str(pos) ';'];
+        write(client,data);
+        clear client
+        break
+    end
+
+end
+
+client = tcpclient("127.0.0.1",6809)
+data=[num2str(d) ' SFS20;']
+write(client,data)
+clear client
+
+% client = tcpclient("127.0.0.1",6809)
+% data=[num2str(d) ' Sl']
+% write(client,data)
+% clear client

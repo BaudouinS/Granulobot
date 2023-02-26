@@ -1,0 +1,7 @@
+# Test Script
+cmd 14 SFS10;    
+cmd 5 SFS-10;
+cmd 8 SFS40;
+cmd 7 SFS-40;
+cmd 4 SFS80;
+cmd 11 SFS-80;

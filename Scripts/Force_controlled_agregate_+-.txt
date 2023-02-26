@@ -1,0 +1,23 @@
+# Test Script
+cmd all Po;
+wait 2
+cmd 1 Sl;
+cmd 10 Sl;
+cmd 9 Sl;
+#cmd 9 Sl;
+#cmd 10 Sl;
+#cmd 7 Sl;
+
+cmd all HandInit /5/6/3/2/;
+wait 1 
+cmd all DRFS-60;
+
+#cmd 1 SFS-40;
+#cmd 2 SFS-40;
+#cmd 3 SFS-40;
+#cmd 5 SFS-40;
+#cmd 6 SFS-40;
+#cmd 8 SFS-40;
+#cmd 9 SFS-40;
+#cmd 10 SFS-40;
+

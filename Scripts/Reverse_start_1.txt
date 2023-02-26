@@ -1,0 +1,5 @@
+# Test Script
+wait 10
+cmd START;    
+cmd all DRFS-70;
+cmd all Po;

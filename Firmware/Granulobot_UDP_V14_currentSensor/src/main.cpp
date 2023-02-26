@@ -35,8 +35,8 @@
 
 ///////Include Local///////////////
 //#include "Wifi_Home.h"
-#include "Wifi_NET.h"
-//#include "Wifi_TP_1.h"
+//#include "Wifi_NET.h"
+#include "Wifi_TP_1.h"
 //#include "Wifi_Marc.h"
 
 //IP address of neighbor for handcheck soliton
